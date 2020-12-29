@@ -1,0 +1,26 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+body{
+  background-image: url("../images/Background.jpeg");
+}
+a {
+  color: #00B7FF;
+}
+.intro-Header
+{
+  padding: 2em;
+  border: black;
+  border-width: 20;
+  border-style: ridge;
+  border-radius: 10em;
+  background-color: brown;
+}
+.ProfileImage
+{
+  float:right;
+  margin-left:1em;
+  border-radius: 5em;
+  
+}
