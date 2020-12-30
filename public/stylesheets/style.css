@@ -1,26 +1,125 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-body{
   background-image: url("../images/Background.jpeg");
+
+  background-attachment: fixed;
+
+  /* Center the background image */
+  background-position: center;
+
+  /* Set the background image to no repeat */
+  background-repeat: no-repeat;
+
+  /* Scale the background image to be as large as possible */
+  background-size: cover;
+  opacity: .9;
+
+
+
 }
-a {
-  color: #00B7FF;
+nav
+{
+  padding: 2em;  
+  background-color: white;
+  height: fit-content;
+  /* border styling*/
+  border-width: 5px;
+  border-style: solid;
+  border-color: #22a6f1;
+  color: black;
+  
+}
+.button-nav
+{
+  border: 3em, solid, cornflowerblue;
+  background-color: cornflowerblue;
+  color: antiquewhite;
+  font:inherit;
+  padding: 1em;
+  margin: .3em;
+  cursor: pointer;
+  border-radius: 1em;
+}
+.button-nav:active,
+.button-nav:hover
+{
+  border: 2em, solid, rgb(35, 109, 245);
+  background-color: rgb(35, 109, 245);
 }
 .intro-Header
 {
   padding: 2em;
-  border: black;
-  border-width: 20;
-  border-style: ridge;
-  border-radius: 10em;
-  background-color: brown;
+  background-color: white;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #22a6f1;
+
+
+
 }
 .ProfileImage
 {
   float:right;
   margin-left:1em;
-  border-radius: 5em;
-  
+  border-radius: 5em;  
 }
+article
+{
+  padding: 2em;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #22a6f1;
+  z-index: 2;
+  background-color: white;
+  height: fit-content;
+}
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.20s;
+  width: min-content;
+  height: min-content;
+  background-color: white;
+}
+.projectImage
+{
+  height: 50px;
+  width: 50px;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.container 
+{
+  padding: 2px 16px;
+}
+input
+{
+  margin: .2em;
+}
+
+.button-input
+{
+  border: 3em, solid, cornflowerblue;
+  background-color: cornflowerblue;
+  color: antiquewhite;
+  font:inherit;
+  padding: 1em;
+  margin: .3em;
+  cursor: pointer;
+  border-radius: 1em;
+}
+.button-input:active,
+.button-input:hover
+{
+  border: 2em, solid, rgb(35, 109, 245);
+  background-color: rgb(35, 109, 245);
+}
+
+
+
+
+
