@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.listen(3000);
+app.listen(3001);
 
 
 app.use('/', LandingPageRouter);
