@@ -18,16 +18,46 @@
 
 
             <script>
-                /*
+
+
+$(document).ready(loadContent);
+            function loadContent()
+            {
+                getPosts();
+            }
+            function getPosts()
+            {
+                fetch('http://localhost:3000/posts/getRecentPosts/',{mode:'cors'}).then(loadPosts);
+                    
+            }
+            function loadPosts()
+            {
+                document.getElementById("picutrespot").innerHTML(1);
+                data.json().then(afterLoad)
+                       
+
+            }
+            function afterLoad()
+            {
+                console.log(dataAsObject);
+               
+                if(dataAsObject.length > 0)
+                {
+                    let _html ="";
+                    dataAsObject.forEach(posts => {_html+= createCard(posts);});
+                    document.getElementById('main-content').innerHTML = _html;
+                }
+                else
+                {
+                    _html+= createCard();
+                }
+
+            }
+            
             function createCard(data)
                 {
                 console.log(data.thumbnail);
-                let thumbnailpath="/"
-                thumbnailpath+=data.thumbnail.split("/")[1]
-                thumbnailpath+="/"
-                thumbnailpath+=data.thumbnail.split("/")[2];
-                thumbnailpath+="/"
-                thumbnailpath+=data.thumbnail.split("/")[3];
+                let thumbnailpath=data.PhotoPath
                 return `<div id=post-${data.id}class="card"> \
                         <img class="card-image" src ="${thumbnailpath}">\
                         <div class="card-body">\ 
@@ -37,43 +67,12 @@
                             </div>\
                             </div> `; 
             }
-
-
-
-            fetch('http://localhost:3000/posts/getRecentPosts/')
-                .then(function(data)
-                {
-                    //console.log(data);
-                    data.json().then(function(dataAsObject)
-                    {
-                        console.log(dataAsObject);
-                        if(dataAsObject.length > 0)
-                        {
-                            let _html ="";
-                        dataAsObject.forEach(posts => {
-                            _html+= createCard(posts);
-                        });
-                        document.getElementById('main-content').innerHTML = _html;
-                        }
-                        else
-                        {
-                            _html+= createCard();
-                        }
-                        
-                    }).catch(function(err)
-                    {
-                        alert(err);
-                        console.log(err);
-                    });
-                });
-
-
-                */
             </script>
 
         <p>
             All my pictures
         </p>
+        <div id ="picutrespot"></div>
         </article>
     </body>
 

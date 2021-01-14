@@ -36,7 +36,7 @@ router.post('/createPost',uploader.single('uploadImage') ,function(req,res,next)
         let baseSQl = 'INSERT INTO posts (title,description,photopath,thumbnail,created,fk_userid) VALUE (?,?,?,?,now(),?);'
         console.log(fileUploaded);
         console.log(desOfThumbnail);
-        console.log(title);
+        console.log(title); 
         console.log(desc);
         console.log(fk_userid);
 
@@ -80,21 +80,17 @@ router.post('/createPost',uploader.single('uploadImage') ,function(req,res,next)
             });
     
     
-        });
+    });
 
-        router.get('/imagepost/:id',function(req,res,next)
-        {
+    router.get('/imagepost/:id',function(req,res,next)
+    {
             res.sendFile("imagePost.html",{root:'public/html'});
-        });
-        router.get('/getPostsById/:id',function(req,res,next)
-        {
-            let _id = req.params.id;
-
-
-            let _sql = 'SELECT p.id, p.title, p.description, p.photopath,u.username \
-            FROM posts p JOIN users u on p.fk_userid=u.id \
-            WHERE p.id=?';
-            db.query(_sql,_id).then(function([results,fields])
+    });
+    router.get('/getPostsById/:id',function(req,res,next)
+    {
+        let _id = req.params.id;
+        let _sql = 'SELECT * FROM SchemaForPosts.Posts';
+            db.query(_sql).then(function([results,fields])
                 {
                     res.json(results[0]);
                 }).catch(function(err)
