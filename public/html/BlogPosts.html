@@ -10,7 +10,7 @@
             <button class="button-nav" onclick="window.location.href='/projects'">Projects</button>
             <button class="button-nav" onclick="window.location.href='/blog'">Blog</button>
             <button class="button-nav" onclick="window.location.href='/app'">App</button>
-            <button class="button-nav" onclick="window.location.href='/createpost'">Create Post</button>
+            <button class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create Post</button>
     </nav>
         <br>
     <body>
@@ -20,39 +20,12 @@
             <script>
 
 
-$(document).ready(loadContent);
-            function loadContent()
-            {
-                getPosts();
-            }
-            function getPosts()
-            {
-                fetch('http://localhost:3000/posts/getRecentPosts/',{mode:'cors'}).then(loadPosts);
-                    
-            }
-            function loadPosts()
-            {
-                document.getElementById("picutrespot").innerHTML(1);
-                data.json().then(afterLoad)
-                       
-
-            }
-            function afterLoad()
-            {
-                console.log(dataAsObject);
+$(document).ready(function()
+{ 
+    fetch('http://localhost:80/blog/getRecentPosts/',{mode:'cors'}).then(response => response.json())
+                    .then(data => document.getElementById("picutrespot").innerHTML=data);
+                });
                
-                if(dataAsObject.length > 0)
-                {
-                    let _html ="";
-                    dataAsObject.forEach(posts => {_html+= createCard(posts);});
-                    document.getElementById('main-content').innerHTML = _html;
-                }
-                else
-                {
-                    _html+= createCard();
-                }
-
-            }
             
             function createCard(data)
                 {

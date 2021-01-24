@@ -11,7 +11,7 @@
             <button class="button-nav" onclick="window.location.href='/projects'">Projects</button>
             <button class="button-nav" onclick="window.location.href='/blog'">Blog</button>
             <button class="button-nav" onclick="window.location.href='/app'">App</button>
-            <button class="button-nav" onclick="window.location.href='/createpost'">Create Post</button>
+            <button class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create Post</button>
     </nav>
         <br>
 
@@ -27,7 +27,7 @@
             
         </div>
         <article>
-            <form action="">
+            <form action="/blog/createpostaction" method="POST" enctype="multipart/form-data">
                 <label for="titleInput">Title:</label>
                 <input type="text" id="titleInput" name="tileValue">
                 <br>

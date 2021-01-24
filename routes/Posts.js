@@ -1,12 +1,16 @@
 var express = require('express');
 const router = express.Router();
-const UserError = require('../helpers/errors/UserError');
-const db = require('../conf/database');
+var path = require('path');
+const postSchema = require('./../models/postSchema');   
 const multer = require('multer');
 const sharp = require('sharp');
 const crypto = require('crypto');
+const { Console } = require('console');
 
-
+router.get('/', function(req, res, next) 
+{
+    res.sendFile(path.join(__dirname + '/../public/html/BlogPosts.html'));
+});
 
 var storage = multer.diskStorage(
     {destination: function(req,file,cb)
@@ -22,85 +26,42 @@ var storage = multer.diskStorage(
     }
 });
 var uploader = multer({storage:storage});
-router.post('/createPost',uploader.single('uploadImage') ,function(req,res,next)
+router.get('/createpostpage', function(req, res, next) 
 {
-
-    let fileUploaded = req.file.path;
-    let fileAsThumbnail = `thumbnail-${req.file.filename}`;
-    let desOfThumbnail = req.file.destination+"/"+fileAsThumbnail;
-    let title = req.body.title;
-    let desc = req.body.description;
-    let fk_userid = req.session.userID;
-    sharp(fileUploaded).resize(200).toFile(desOfThumbnail).then(function()
-    {
-        let baseSQl = 'INSERT INTO posts (title,description,photopath,thumbnail,created,fk_userid) VALUE (?,?,?,?,now(),?);'
-        console.log(fileUploaded);
-        console.log(desOfThumbnail);
-        console.log(title); 
-        console.log(desc);
-        console.log(fk_userid);
-
-
-        return db.execute(baseSQl,[title, desc,fileAsThumbnail,desOfThumbnail,fk_userid]);
-         
-        
-    }).then(function([results,fields])
-    {
-        console.log(results.affectedRows);
-        if(results&& results.affectedRows)
-        {
-            db.execute(baseSQl,[title, desc,fileAsThumbnail,desOfThumbnail,fk_userid]);
-            res.redirect('/');
-            //res.json({status:"ok",message:"post was created","redirect":"/"});
-
-            
-        }
-        else
-        {
-            
-            res.json({status:"ok",message:"post was not created","redirect":"/postimage"});
-            //next(Error('post was not created'));
-        }
-    }).catch(function(err)
-    {
-        next(err);
-    });
+  res.sendFile(path.join(__dirname + '/../public/html/CreatePost.html'));
 });
-
-
-
-    router.get('/getRecentPosts',function(req,res,next)
+router.post('/createpostaction',uploader.single('pictureValue'),async function(request,response,next)
+{
+    try
     {
-        let searchTerm = req.params.searchTerm;
-        let _sql = 'SELECT p.id, p.title, p.description, FROM posts'
-   
-        db.query(_sql).then(function([results,fields])
-            {
-                res.json(results);
-            });
+        let fileAsThumbnail = `thumbnail-${request.file.filename}`;
+        var post = new postSchema({
+            title:request.titleValue,
+            description:request.descriptionValue,
+            photoPath:fileAsThumbnail    
+        })
+        post = await post.save();
+    }
+    catch(exception){
+
+    }
+    response.redirect('/blog');
+});
+router.get('/getRecentPosts',async function(req,res,next)
+{
     
+    try
+    {
+        var recentposts= await postSchema.find({});
+        console.log(recentposts);
+        var jsondata=json(recentposts);
+        console.log(jsondata);
+    }
+    catch(exception)
+    {
+        res.send("error");
+    }
     
-    });
-
-    router.get('/imagepost/:id',function(req,res,next)
-    {
-            res.sendFile("imagePost.html",{root:'public/html'});
-    });
-    router.get('/getPostsById/:id',function(req,res,next)
-    {
-        let _id = req.params.id;
-        let _sql = 'SELECT * FROM SchemaForPosts.Posts';
-            db.query(_sql).then(function([results,fields])
-                {
-                    res.json(results[0]);
-                }).catch(function(err)
-                {
-                    next(err);
-                });
-        
-
-
-
-        });
-
+    res.send("jsondata");    
+});
 module.exports =router;
