@@ -26,8 +26,12 @@ nav
   /* border styling*/
   border-width: 5px;
   border-style: solid;
-  border-color: #22a6f1;
+  border-color: #0a6ba3;
   color: black;
+  position:fixed;
+  top:0;
+  left:0; 
+  width:100%;
   
 }
 .button-nav
@@ -66,6 +70,7 @@ nav
 }
 article
 {
+ 
   padding: 2em;
   border-width: 5px;
   border-style: solid;
@@ -119,7 +124,9 @@ input
   box-sizing: border-box;
 }
 
-body {
+body 
+{
+  margin-top: 60px;
   font-family: Arial, Helvetica, sans-serif;
 }
 
