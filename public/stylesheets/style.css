@@ -1,6 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  /*background-image: url("../images/Background.jpeg");*/
+  background-image: url("../images/Background.jpeg");
 
   background-attachment: fixed;
 
@@ -12,16 +12,13 @@ body {
 
   /* Scale the background image to be as large as possible */
   background-size: cover;
-  opacity: .9;
 
-  margin-top: 60px;
   font-family: Arial, Helvetica, sans-serif;
-  margin-left: 0%;
-
+  /*text-align: center;*/
+  z-index: 0;
 }
 nav
 {
-  padding: 2em;  
   background-color: white;
   height: fit-content;
   /* border styling*/
@@ -34,8 +31,8 @@ nav
   left:0; 
   width:100%;
   overflow: hidden;
-  z-index: 10;
-  
+  text-align: center;
+  z-index: 3;
 }
 .button-nav
 {
@@ -47,6 +44,7 @@ nav
   margin: .3em;
   cursor: pointer;
   border-radius: 1em;
+  opacity: 1;
 }
 .button-nav:active,
 .button-nav:hover
@@ -60,21 +58,19 @@ nav
   padding-top:60px ;
   position: relative;
   text-align: center;
-  color: white;
+  color: black;
   flex-wrap: wrap;
   height: 50%;
-}
-.top-left {
-  position: absolute;
-  top: 8px;
-  left: 16px;
-  padding-top: 60px;
+  text-align: center;
+  z-index:1 ;
 }
 .ProfileImage
 {
   float:right;
   margin-left:1em;
   border-radius: 5em;  
+  z-index: 2;
+
 }
 article
 {
@@ -159,6 +155,7 @@ input
   width: min-content;
   height: min-content;
   margin: 100px;
+  opacity: 1;
 
 
 }
@@ -170,9 +167,4 @@ input
     display: block;
     margin-bottom: 20px;
   }
-}
-.img
-+ .intro-Header{
-  max-width:fill;
-  max-height:720px;
 }
