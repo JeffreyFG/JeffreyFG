@@ -121,8 +121,8 @@ input
 }
 .cardSection
 {
-  column-count: 3;
-  column-gap: 40px;
+  column-count: 2;
+  column-gap: 20px;
 }
 * {
   box-sizing: border-box;

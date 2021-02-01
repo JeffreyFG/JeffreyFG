@@ -1,7 +1,7 @@
 var express = require('express');
 const router = express.Router();
 var path = require('path');
-const postSchema = require('./../models/postSchema');   
+const Post= require('./../models/postSchema');   
 const multer = require('multer');
 const sharp = require('sharp');
 const crypto = require('crypto');
@@ -35,7 +35,7 @@ router.post('/createpostaction',uploader.single('pictureValue'),async function(r
     try
     {
         let fileAsThumbnail = `thumbnail-${request.file.filename}`;
-        var post = new postSchema({
+        const post = new postSchema({
             title:request.titleValue,
             description:request.descriptionValue,
             photoPath:fileAsThumbnail    

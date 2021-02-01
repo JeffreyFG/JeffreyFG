@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require('dotenv/config')
 
 var LandingPageRouter = require('./routes/LandingPage');
 var projectsPageRouter = require('./routes/Projects');
@@ -27,11 +28,11 @@ app.use('/', LandingPageRouter);
 app.use('/projects',projectsPageRouter);
 app.use('/blog',postRouter);
 app.use('/app',AppPageRouter);
-mongoose.connect('mongodb://mongoroot:mongo1221@localhost:27017/PostDataBase?authSource=admin', {useNewUrlParser: true,useUnifiedTopology: true},()=>console.log("conected to db"));
+mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true,useUnifiedTopology: true},()=>console.log("conected to db"));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.status(404).sendFile('./public/html/Error.html');
 });
 
 // error handler
