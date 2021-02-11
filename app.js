@@ -21,11 +21,11 @@ app.use(express.urlencoded({extended:false}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(80);
-app.use(cors);
+//app.use(cors);
 
 app.use('/', LandingPageRouter);
 app.use('/projects',projectsPageRouter);
