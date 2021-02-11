@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('dotenv/config')
+const bodyParser = require('body-parser');
 
 var LandingPageRouter = require('./routes/LandingPage');
 var projectsPageRouter = require('./routes/Projects');
@@ -17,6 +18,7 @@ app.use(express.urlencoded({extended:false}));
 // view engine setup
 
 app.use(logger('dev'));
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

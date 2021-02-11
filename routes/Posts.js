@@ -7,6 +7,7 @@ const sharp = require('sharp');
 const crypto = require('crypto');
 const { Console } = require('console');
 
+
 router.get('/', function(req, res, next) 
 {
     res.sendFile(path.join(__dirname + '/../public/html/BlogPosts.html'));

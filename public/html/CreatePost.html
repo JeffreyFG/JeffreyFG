@@ -20,30 +20,27 @@
             
             <h1>This is where I can create blogposts using my website</h1>
             
-            <br>
-            <br>
-            <br>
-            <br>
-            
         </div>
-        <article>
-            <form action="/blog/createpostaction" method="POST" enctype="multipart/form-data">
-                <label for="titleInput">Title:</label>
-                <input type="text" id="titleInput" name="tileValue">
-                <br>
-                <label for="titleInput">Description:</label>
-                <input type="text" id="titleInput" name="descriptionValue">
-                <br>
-                <label for="picInput">Picture:</label>
-                <input type="file" id="pictureInput" name="pictureValue">
-                <br>
-                <label for="passwordInput">Password</label>
-                <input type="text" id="passwordInput" name="passwordValue">
-                <br>
-                <input class="button-input" type="submit" value="Create Post" >
-                <br>
-            </form>
-        </article>
+        <div style="text-align: center;">        
+            <article>
+                <form action="/blog/createpostaction" method="POST" enctype="multipart/form-data">
+                    <label for="titleInput">Title:</label>
+                    <input type="text" id="titleInput" name="tileValue">
+                    <br>
+                    <label for="titleInput">Description:</label>
+                    <input type="text" id="titleInput" name="descriptionValue">
+                    <br>
+                    <label for="picInput">Picture:</label>
+                    <input type="file" id="pictureInput" name="pictureValue">
+                    <br>
+                    <label for="passwordInput">Password</label>
+                    <input type="text" id="passwordInput" name="passwordValue">
+                    <br>
+                    <input class="button-input" type="submit" value="Create Post" >
+                    <br>
+                </form>
+            </article>
+        </div>
     </body>
 
 </html>
