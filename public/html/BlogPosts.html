@@ -9,24 +9,41 @@
             <script>
                 $(document).ready(function()
                 { 
-                    fetch('http://localhost:80/blog/getRecentPosts/',{mode:'cors'}).then(response => response.json())
-                                    .then(data => document.getElementById("picutrespot").innerHTML=data);
-                                });
-                               
+                    fetch('http://localhost:80/blog/getRecentPosts/',{mode:'cors'}).then(function(response)
+                    {   
+                        var data = response.json().then(function(data)
+                        {
+                           
+                            var cards="";
+                         
+                            console.log(data);
+                            var i =0;
+                            for(const blogPost of data.reverse())
+                            {
                             
-                            function createCard(data)
-                                {
-                                console.log(data.thumbnail);
-                                let thumbnailpath=data.PhotoPath
-                                return `<div id=post-${data.id}class="card"> \
-                                        <img class="card-image" src ="${thumbnailpath}">\
-                                        <div class="card-body">\ 
-                                            <p class="card-title">${data.title}</p>\
-                                            <p class="card-text">${data.description}</p> \
-                                            <a href="/posts/imagepost/${data.id}" class="anchor-buttons">Details </a>\
-                                            </div>\
-                                            </div> `; 
+                                cards=cards+createCard(blogPost);
                             }
+                            document.getElementById("picutrespot").innerHTML=cards;
+                            
+                           
+                        });
+ 
+                    });   
+                });
+                function createCard(data)
+                {
+                    var card=`<div class="card"> \
+                                <img class="card-image" src ="../images/uploads/${data.photoPath}">\
+                                    <div class="card-body">\ 
+                                        <p class="card-title">${data.title}</p>\
+                                            <p class="card-text">${data.description}</p> \
+                                                <a href="/posts/imagepost/${data.id}" class="anchor-buttons">Details </a>\
+                                    </div>\
+                            </div> `; 
+                    return card;
+                }           
+                    
+                            
                             </script>
         </head>
         <nav>

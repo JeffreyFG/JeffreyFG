@@ -33,36 +33,52 @@ router.get('/createpostpage', function(req, res, next)
 });
 router.post('/createpostaction',uploader.single('pictureValue'),async function(request,response,next)
 {
-    try
-    {
-        let fileAsThumbnail = `thumbnail-${request.file.filename}`;
-        const post = new postSchema({
-            title:request.titleValue,
-            description:request.descriptionValue,
-            photoPath:fileAsThumbnail    
-        })
-        post = await post.save();
-    }
-    catch(exception){
+        if(request.body.passwordValue==process.env.password)
+        {
+            let pathArray=request.file.path.split("/");
+        let fileAsThumbnail = pathArray[pathArray.length-1];
 
-    }
-    response.redirect('/blog');
+        console.log("value of title: "+request.body.titleValue);
+        console.log("value of thumbnail: "+fileAsThumbnail);
+        console.log(request.body);
+        console.log("before creation of post");
+        let post = new Post({
+            title:request.body.titleValue,
+            description:request.body.descriptionValue,
+            photoPath:fileAsThumbnail    
+        });
+        console.log("before saving");
+        try
+        {
+            const newPost =post.save()
+            response.status(201).redirect('/blog');
+        }
+        catch(err)
+        {
+            response.status(400);
+            console.log("error in creating post");
+            console.log(err);
+        }
+        }
+        else
+        {
+            response.send("Error wrong password");
+        }
+        
 });
-router.get('/getRecentPosts',async function(req,res,next)
+router.get('/getRecentPosts',async function(request,response,next)
 {
-    
     try
     {
-        var recentposts= await postSchema.find({});
+        var recentposts= await Post.find();
         console.log(recentposts);
-        var jsondata=json(recentposts);
-        console.log(jsondata);
+        response.json(recentposts);
+
     }
     catch(exception)
     {
-        res.send("error");
+        response.send("error");
+        console.log(exception);
     }
-    
-    res.send("jsondata");    
 });
 module.exports =router;

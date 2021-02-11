@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-require('dotenv/config')
+require('dotenv').config();
 const bodyParser = require('body-parser');
 
 var LandingPageRouter = require('./routes/LandingPage');
@@ -25,13 +25,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.listen(80);
 
-
 app.use('/', LandingPageRouter);
 app.use('/projects',projectsPageRouter);
 app.use('/blog',postRouter);
 app.use('/app',AppPageRouter);
-mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true,useUnifiedTopology: true},()=>console.log("conected to db"));
-
+mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true,useUnifiedTopology: true});
+const db = mongoose.connection;
+db.once('open',function()
+{
+  console.log("connected to the database");
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   res.status(404).sendFile('./public/html/Error.html');
