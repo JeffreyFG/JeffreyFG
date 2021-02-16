@@ -1,32 +1,24 @@
 var createError = require('http-errors');
-var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-//var cors = require('cors');
+var express = require('express');
 require('dotenv').config();
 const bodyParser = require('body-parser');
-
 var LandingPageRouter = require('./routes/LandingPage');
 var projectsPageRouter = require('./routes/Projects');
-
 var AppPageRouter = require('./routes/AppPage');
 var postRouter = require('./routes/Posts');
 const app = express();
 const mongoose = require('mongoose');
-
+app.get('*', function(req, res) {res.redirect('https://' + req.headers.host + req.url);})
+app.listen(8080);
 app.use(express.urlencoded({extended:false}));  
-// view engine setup
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.json());
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.listen(80);
-//app.use(cors);
-
 app.use('/', LandingPageRouter);
 app.use('/projects',projectsPageRouter);
 app.use('/blog',postRouter);
