@@ -19,13 +19,13 @@ const postRouter = require('./routes/Posts');
 //https server config
 
 const app = express();
-const httpsOpttions={
-  cert: fs.readFileSync(path.join(__dirname,'ssl','server.crt')),
-  cert: fs.readFileSync(path.join(__dirname,'ssl','server.key'))
-}
-https.createServer(httpsOpttions,app)
-app.get('*', function(req, res) {res.redirect('https://' + req.headers.host + req.url);})
-app.listen(8080);
+//const httpsOpttions={
+ // cert: fs.readFileSync(path.join(__dirname,'ssl','server.crt')),
+ // cert: fs.readFileSync(path.join(__dirname,'ssl','server.key'))
+//}
+//https.createServer(httpsOpttions,app)
+//app.get('*', function(req, res) {res.redirect('https://' + req.headers.host + req.url);})
+app.listen(80);
 //
 
 
