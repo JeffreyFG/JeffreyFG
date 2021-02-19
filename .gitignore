@@ -5,3 +5,5 @@ node_modules
 ./public/images/uploads
 .DS_store
 .sass-cache
+./public/.wellknown
+./public/.wellknown/*
