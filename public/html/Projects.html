@@ -24,7 +24,7 @@
             GitHub projects here.
             
         </p>
-            <div id="repos">
+            <div class="grid-container" id="repos">
 
             </div>
         </article>
@@ -32,14 +32,11 @@
     <script>
 
 const divResult = document.getElementById("repos");
-var content="";
-var currentColumnCount=0;
+
 function creatCard(repo)
     {
-   
-        content+=
-        
-        `<div class="column">
+        divResult.innerHTML+=
+        `<div class="grid-item">
             <a href="${repo.html_url}">
                 <div class="card">
                     <img src="../images/matrix-code.jpg" alt="Avatar" style="width:100%">
@@ -49,35 +46,21 @@ function creatCard(repo)
                     </div>
                 </div>
             </a>
-        </div>`
+        </div>`;
     }
     $(document).ready(getRepos);
     function getRepos()
     {
-    
     const url = "https://api.github.com/users/JeffreyFG/repos";
     var request = new XMLHttpRequest(url);
     request.open('GET',url,true)
     request.onload = function()
     {
         var data = JSON.parse(this.response);
-        content+=`<div class ="row">`;
         data.forEach(element => 
         {
-            if(currentColumnCount%3==0)
-            {
-                content+=`<div class ="row">`
-            }
             creatCard(element);
-            currentColumnCount++;
-            if(currentColumnCount%3==0)
-            {
-                content+=`</div>`
-            }
-            
         });
-        content+=`</div>`
-        divResult.innerHTML=content;
     }
     request.send();
 }

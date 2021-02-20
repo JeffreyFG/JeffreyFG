@@ -19,4 +19,4 @@ const schemaForPosts = new mongoose.Schema({
     }
 
 })
-module.exports =  mongoose.model('blogData',schemaForPosts);
+module.exports =  mongoose.model('blogData',schemaForPosts);// this name is responsable for creating the name in the data base.

@@ -15,24 +15,27 @@
     </nav>
         <br>
 
-    <body>
+    <body >
         <div class="intro-Header">
             
             <h1>This is where I can create blog posts using my website</h1>
             
         </div>
-        <div style="text-align: center;">        
+        <div style="text-align: center;">      
             <article>
+
                 <form action="/blog/createpostaction" method="POST" enctype="multipart/form-data" text-align:justify>
                     <label for="titleInput">Title:</label>
                     <input type="text" id="titleInput" name="titleValue">
                     <br>
-                    <label for="descriptionInput">Description:</label>
                     <br>
+                    <label for="descriptionInput">Description:</label>
+            
                     <textarea id="descriptionInput" name="descriptionValue"></textarea>
                     <br>
+                    <br>
                     <label for="pictureInput">Picture:</label>
-                    <input type="file" id="pictureInput" name="pictureValue">
+                    <input type="file" id="pictureInput" name="pictureValue" multiple accept="image/*"> 
                     <br>
                     <label for="passwordInput">Password</label>
                     <input type="password" id="passwordInput" name="passwordValue">
