@@ -177,11 +177,17 @@ input
   height: 300px;
   width: 300px;
 }
-
-.grid-container 
+.grid-container-for-projects
 {
   display: grid;
   grid-template-columns: auto auto auto;
+  padding: 10px;
+
+}
+.grid-container-for-posts 
+{
+  display: grid;
+  grid-template-columns: auto auto;
   padding: 10px;
 
 }
