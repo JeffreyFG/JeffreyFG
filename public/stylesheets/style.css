@@ -16,7 +16,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   /*text-align: center;*/
   z-index: 0;
-  text-align: center;
 }
 nav
 {
@@ -30,9 +29,9 @@ nav
   position:fixed;
   top:0;
   left:0; 
-  width:100%;
   overflow: hidden;
   text-align: center;
+  width: 100%;
   z-index: 3;
 }
 .button-nav
@@ -41,11 +40,14 @@ nav
   background-color: cornflowerblue;
   color: antiquewhite;
   font:inherit;
-  padding: 1em;
+  padding:.5em;
   margin: .3em;
   cursor: pointer;
   border-radius: 1em;
   opacity: 1;
+  height: auto;
+  width:auto;
+  font-size: min(2.8em,300%);
 }
 .button-nav:active,
 .button-nav:hover
@@ -56,7 +58,7 @@ nav
 .intro-Header
 {
   width: 100%;
-  padding-top:60px ;
+  padding-top:120px ;
   position: relative;
   text-align: center;
   color: black;
@@ -80,9 +82,11 @@ article
   border-width: 5px;
   border-style: solid;
   border-color: #22a6f1;
-  z-index: 2;
+  z-index: 0;
   background-color: white;
   height: fit-content;
+  text-align: center;
+  width: min(500,70%);
 }
 .projectImage
 {
@@ -130,24 +134,6 @@ input
   box-sizing: border-box;
 }
 
-/* Float four columns side by side */
-.column 
-{
-  float: left;
-  width: 25%;
-  padding: 0 10px;
-}
-
-/* Remove extra left and right margins, due to padding in columns */
-.row {margin: 0 -5px;}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 /* Style the counter cards */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
@@ -168,7 +154,8 @@ input
   height: 300px;
   width: 300px;
 }
-@media only screen and (min-width:50em)
+
+@media only screen and (min-width:480px)
 {
   .grid-container-for-projects
   {
@@ -195,4 +182,117 @@ input
   padding: 10px;
 
   }
+  .article-content
+  {
+  font-size: min(3em,300%);
+  }
+  .button-nav
+  {
+    font-size: min(1.3em,300%);
+    
+  }
 }
+/******************iphone****************/
+@media only screen and (min-width:900px)
+{
+  .grid-container-for-projects
+  {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(20em,1fr));
+    padding: 10px;
+    margin-bottom: 4em;
+    font-size: 1.5em;
+  
+  }
+  .grid-container-for-posts 
+  {
+  display: grid;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit,minmax(30em,1fr));
+  padding: 10px;
+  grid-gap:1em
+
+  }
+  .grid-container-for-article
+  {
+    
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(30em,1fr));
+  padding: 10px;
+
+  }
+  .article-content
+  {
+  font-size: min(3em,300%);
+  }
+  .button-nav
+  { 
+    font-size: min(2.5em,300%);
+  }
+  .create-post-section
+  {
+    display: inline-block;
+    text-align: left;
+    font-size: min(3em,300%);
+  }
+  input{
+    height: 5em;
+  }
+
+  input[type="file"] {
+    position: absolute;
+    z-index: -1;
+    top: 10px;
+    left: 8px;
+    font-size: 1.3em;
+    color: #b8b8b8;
+  }
+
+  .intro-Header
+  {
+    font-size: 2em;
+  }
+  p{
+    font-size: 3em;
+  }
+}
+
+/******************desktop****************/
+
+@media only screen and (min-width:1080px)
+{
+  .button-nav
+  {
+    font-size: 1.5em;
+  }
+  .article-content
+  {
+  font-size: min(1em,300%);
+  }
+ 
+  .create-post-section
+  {
+    display: inline-block;
+    text-align: left;
+    font-size: 1em;
+  }
+  input
+  {
+    height: auto;
+    font-size: 12px;
+  }
+  .button-input 
+  {
+    cursor: pointer;
+    margin: 5px;
+    padding: 1em;
+    width:auto;
+    font-size: 1em;
+  }
+  .intro-Header
+  {
+    font-size: 1em;
+  }
+}
+/*
+  */

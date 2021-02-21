@@ -21,10 +21,10 @@
             <h1>This is where I can create blog posts using my website</h1>
             
         </div>
-        <div style="text-align: center;">      
-            <article>
+        <article>
+            <div class= "create-post-section">      
 
-                <form action="/blog/createpostaction" method="POST" enctype="multipart/form-data" text-align:justify>
+                <form action="/blog/createpostaction" method="POST" enctype="multipart/form-data">
                     <label for="titleInput">Title:</label>
                     <input type="text" id="titleInput" name="titleValue">
                     <br>
@@ -34,8 +34,14 @@
                     <textarea id="descriptionInput" name="descriptionValue"></textarea>
                     <br>
                     <br>
-                    <label for="pictureInput">Picture:</label>
-                    <input type="file" id="pictureInput" name="pictureValue" multiple accept="image/*"> 
+                    <br>
+                    <br>
+
+                    <label class="button-input" for="upload">Upload File</label>
+                    <input id="upload" type="file"class="button-for-upload" id="pictureInput" name="pictureValue" accept="image/*">
+                    
+                    <br>
+                    <br>
                     <br>
                     <label for="passwordInput">Password</label>
                     <input type="password" id="passwordInput" name="passwordValue">
@@ -43,8 +49,8 @@
                     <input class="button-input" type="submit" value="Create Post" >
                     <br>
                 </form>
-            </article>
-        </div>
+            </div>
+        </article>
     </body>
 
 </html>
