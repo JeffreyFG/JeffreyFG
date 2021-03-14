@@ -5,31 +5,41 @@
             <title>Landing page</title>
             <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
         </head>
-        <nav>
-            <button class="button-nav" onclick="window.location.href='/'">Home</button>
-            <button class="button-nav" onclick="window.location.href='/projects'">Projects</button>
-            <button class="button-nav" onclick="window.location.href='/blog'">Blog</button>
-            <button class="button-nav" onclick="window.location.href='/app'">App</button>
-            <button class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create Post</button>
+        <div>
+        <nav id="main-navbar">
+            <div class="grid-container-for-nav">
+                <div class="grid-item">   
+                    <h1 class="button-nav" onclick="window.location.href='/'">Home</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/projects'">Projects</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/blog'">Blog</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/app'">App</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create</h1>
+                </div>
+            
+            </div>
         </nav>
-    <br>
-
     <body> 
-        <div class="intro-Header">
-            <img src="../images/profilePicture.jpeg" alt="Picture of Jeffrey FG" class="ProfileImage">  
-            <h1>Welcome to Jeffrey FG's personal website</h1>
-            
-            
-            <h1>I built this website in order to create a digital portfolio beyond just Git Hub.</h1>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>            
-        </div>
+            <div class="intro-Header">
+                <img src="../images/profilePicture.jpeg" alt="Picture of Jeffrey FG" class="ProfileImage">  
+                <h1>Welcome to Jeffrey FG's personal website</h1>    
+                <h1>I built this website in order to create a digital portfolio beyond just Git Hub.</h1>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>            
+            </div>
         <article>
-        <p>
+            <p>
             
                 <div class ="article-content"  >
                         Hello, thank you for coming to my website, My name is Jeffrey Fulmer Gardner. 
@@ -41,9 +51,13 @@
                         built on express and Nodejs is hosted by me. From hardware configuration to final website, I have 
                         created this with my own skills. I will continue to add features and improve the look of my website 
                         over time.
-            </div>
-        </p>
+                </div>
+            </p>
         </article>
     </body>
-
+<script>
+    $(window).resize(function () { 
+    $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
+    });
+</script>
 </html>

@@ -7,12 +7,25 @@
         </head>
         
         <nav>
-            <button class="button-nav" onclick="window.location.href='/'">Home</button>
-            <button class="button-nav" onclick="window.location.href='/projects'">Projects</button>
-            <button class="button-nav" onclick="window.location.href='/blog'">Blog</button>
-            <button class="button-nav" onclick="window.location.href='/app'">App</button>
-            <button class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create Post</button>
-    </nav>
+            <div class="grid-container-for-nav">
+                <div class="grid-item">   
+                    <h1 class="button-nav" onclick="window.location.href='/'">Home</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/projects'">Projects</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/blog'">Blog</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/app'">App</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create</h1>
+                </div>
+            
+            </div>
+        </nav>
         <br>
 
     <body >
@@ -25,6 +38,18 @@
             <div class= "create-post-section">      
 
                 <form action="/blog/createpostaction" method="POST" enctype="multipart/form-data">
+                    <!--<label for="titleInput">location:</label>
+                    
+                    <input type ="text" id = "location-info" name="location-input" style="width: 350px;"> 
+                    
+                    <input type="button" id ="location-button" value ="insert location ">
+                    <div style="visibility:hidden;">
+                        <input type ="text" id = "location-info-latitude" name="location-input-latitude"> 
+                        <input type ="text" id = "location-info-longitude" name="location-inpu-longitude">
+                    
+                    </div>
+                    -->
+                    <br>
                     <label for="titleInput">Title:</label>
                     <input type="text" id="titleInput" name="titleValue">
                     <br>
@@ -45,12 +70,37 @@
                     <br>
                     <label for="passwordInput">Password</label>
                     <input type="password" id="passwordInput" name="passwordValue">
+
                     <br>
                     <input class="button-input" type="submit" value="Create Post" >
                     <br>
                 </form>
             </div>
         </article>
+        <script>
+var locationInfo = document.getElementById("location-info");
+var locationButton = document.getElementById("location-button");
+var locationInfoLatitude = document.getElementById("location-input-latitude");
+var locationInfoLongitude = document.getElementById("location-input-longitude");
+locationButton.onclick= function()
+{
+    if (navigator.geolocation) 
+    {
+        navigator.geolocation.getCurrentPosition( function(postion)
+        {
+            console.log("your postion: latitude: "+postion.coords.latitude+" longitude: "+postion.coords.longitude);
+            locationInfo.value="your postion: latitude: "+postion.coords.latitude+" longitude: "+postion.coords.longitude;
+            locationInfoLatitude.value=postion.coords.latitude;
+            locationInfoLongitude.value=postion.coords.longitude;
+        });
+    }
+    else 
+    {
+    locationInfo.innerText = "Geolocation is not supported by this browser.";
+    }
+}
+
+        </script>
     </body>
 
 </html>

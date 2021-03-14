@@ -5,35 +5,48 @@
             <title>Jeffrey's blog posts</title>
             <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
         </head>
-        <nav>
-            <button class="button-nav" onclick="window.location.href='/'">Home</button>
-            <button class="button-nav" onclick="window.location.href='/projects'">Projects</button>
-            <button class="button-nav" onclick="window.location.href='/blog'">Blog</button>
-            <button class="button-nav" onclick="window.location.href='/app'">App</button>
-            <button class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create Post</button>
-    </nav>
+        <nav id="main-navbar">
+            <div class="grid-container-for-nav">
+                <div class="grid-item">   
+                    <h1 class="button-nav" onclick="window.location.href='/'">Home</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/projects'">Projects</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/blog'">Blog</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/app'">App</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create</h1>
+                </div>
+            
+            </div>
+        </nav>
     <body>
         <div class="intro-Header">
-            <div class="top-center">
                 <h1> This is the personal blog for JeffreyFG</h1>
-            </div>
         </div>
         <article>
             <div class="grid-container-for-posts" id="picutrespot"></div>
         </article>
     </body>
 <script>
+
     const divResult = document.getElementById("picutrespot");
     function createCard(data)
     {
         divResult.innerHTML+=
         `<div class="grid-item">
-            <div class="card"> 
+            <a href="/blog/imagePost/${data._id}" class="anchor-buttons">
+                <div class="card">
                 <img  class="card-image" src ="../images/uploads/${data.photoPath}">
                     <div class="card-body">
                     <p center;"class="card-title">${data.title}</p>
                     <p class="card-text">${data.description}</p> 
-                    <a href="/blog/imagePost/${data._id}" class="anchor-buttons">Details </a>\
+                    </a>\
                 </div>
         </div> `; 
     }         
@@ -50,6 +63,12 @@
                 });
          
             });   
-        });            
+        });
+        
+    $(window).resize(function () 
+    { 
+        $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
+        console.log("top")
+    });
 </script>
 </html>

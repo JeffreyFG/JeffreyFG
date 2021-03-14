@@ -16,7 +16,12 @@ const schemaForPosts = new mongoose.Schema({
     {
         type:String,
         required:true
-    }
+    },/*
+    gpslocation:
+    {
+        type:String,
+        required:true
+    }*/
 
 })
 module.exports =  mongoose.model('blogData',schemaForPosts);// this name is responsable for creating the name in the data base.

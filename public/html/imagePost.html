@@ -7,12 +7,25 @@
 
         </head>
         <nav>
-            <button class="button-nav" onclick="window.location.href='/'">Home</button>
-            <button class="button-nav" onclick="window.location.href='/projects'">Projects</button>
-            <button class="button-nav" onclick="window.location.href='/blog'">Blog</button>
-            <button class="button-nav" onclick="window.location.href='/app'">App</button>
-            <button class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create Post</button>
-    </nav>
+            <div class="grid-container-for-nav">
+                <div class="grid-item">   
+                    <h1 class="button-nav" onclick="window.location.href='/'">Home</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/projects'">Projects</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/blog'">Blog</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/app'">App</h1>
+                </div>
+                <div class="grid-item">
+                    <h1 class="button-nav" onclick="window.location.href='/blog/createpostpage'">Create</h1>
+                </div>
+            
+            </div>
+        </nav>
         <br>
     <body>
             <div class="intro-Header">
@@ -31,12 +44,18 @@
 
             <div class="myImg" id="main-content">
                 <h1  id="titleForPic"></h1>
-                <img  width = "400" height = "300"  id="main-image"> 
+                <img  width = "auto" height = "400"  id="main-image"> 
                 <p id ="description">description:</p>
+                <br>
+                <p id ="time-date">time and date:</p>
+                <p id="location"></p>
+                <p id="makeAndModel"></p>
             </div>
         </article>
     </body>
     <script>
+     
+      
          $(document).ready(function()
          {
             let url = document.URL.split('/');
@@ -48,12 +67,13 @@
                 {
                     data.json().then(function(data)
                     {
-                        console.log(data);
                         var pathForPhoto = "../../images/uploads/"+data[0].photoPath;
                         document.getElementById("main-image").setAttribute("src",pathForPhoto);
                         document.getElementById("title").innerText = data[0].title;
                         document.getElementById("titleForPic").innerText = data[0].title;
                         document.getElementById("description").innerHTML="description: "+data[0].description;
+                        document.getElementById("time-date").innerHTML="time and date: "+data[0].date;
+
                     });  
                 }
                 catch(e)
@@ -61,6 +81,7 @@
                     console.log(e);
                 } 
             });
+
          });
     </script>
 

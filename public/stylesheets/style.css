@@ -1,3 +1,4 @@
+
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-image: url("../images/Background.jpeg");
@@ -16,16 +17,15 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   /*text-align: center;*/
   z-index: 0;
+  margin: 0;
+  padding: 0;
 }
 nav
 {
-  background-color: white;
+  background-color: rgb(1, 8, 24);
   height: fit-content;
   /* border styling*/
-  border-width: 5px;
-  border-style: solid;
-  border-color: #0a6ba3;
-  color: black;
+  color: rgb(241, 228, 228);
   position:fixed;
   top:0;
   left:0; 
@@ -33,39 +33,34 @@ nav
   text-align: center;
   width: 100%;
   z-index: 3;
+  padding-left: 20em;
+  padding-right: 20em;
 }
 .button-nav
 {
-  border: 3em, solid, cornflowerblue;
-  background-color: cornflowerblue;
-  color: antiquewhite;
+  /*border: 3em, solid, cornflowerblue;
+  border-radius: 1em;
+   background-color: cornflowerblue;
+  */
+  color: rgb(103, 179, 250);
   font:inherit;
   padding:.5em;
   margin: .3em;
   cursor: pointer;
-  border-radius: 1em;
+  width: fit-content;
   opacity: 1;
   height: auto;
-  width:auto;
   font-size: min(2.8em,300%);
 }
 .button-nav:active,
 .button-nav:hover
 {
-  border: 2em, solid, rgb(35, 109, 245);
-  background-color: rgb(35, 109, 245);
-}
-.intro-Header
-{
-  width: 100%;
-  padding-top:120px ;
-  position: relative;
-  text-align: center;
-  color: black;
-  flex-wrap: wrap;
-  height: 50%;
-  text-align: center;
-  z-index:1 ;
+  color: #12d3c9;
+  border-color: #12d3c9;
+  border-bottom: 5px;
+  border-bottom: solid;
+  margin-bottom: .1em;
+
 }
 .ProfileImage
 {
@@ -78,15 +73,12 @@ nav
 article
 {
  
-  padding: 2em;
-  border-width: 5px;
-  border-style: solid;
   border-color: #22a6f1;
   z-index: 0;
   background-color: white;
-  height: fit-content;
   text-align: center;
-  width: min(500,70%);
+  width: 100%;
+
 }
 .projectImage
 {
@@ -154,9 +146,16 @@ input
   height: 300px;
   width: 300px;
 }
-
+/******************** small screens****************************/
 @media only screen and (min-width:480px)
 {
+  .grid-container-for-nav
+  {
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit,minmax(10em,1fr));
+    padding: 10px;
+  }
   .grid-container-for-projects
   {
     display: grid;
@@ -179,7 +178,7 @@ input
     
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(30em,1fr));
-  padding: 10px;
+
 
   }
   .article-content
@@ -192,9 +191,20 @@ input
     
   }
 }
-/******************iphone****************/
+/******************iphone****************
+
+
+**************************************/
 @media only screen and (min-width:900px)
 {
+
+  .grid-container-for-nav
+  {
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit,minmax(10em,1fr));
+
+  }
   .grid-container-for-projects
   {
     display: grid;
@@ -261,13 +271,43 @@ input
 
 @media only screen and (min-width:1080px)
 {
+  .intro-Header
+  {
+    width: 100%;
+    padding-top:120px ;
+    position: relative;
+    text-align: center;
+    color: black;
+    flex-wrap: wrap;
+    height: 50%;
+    text-align: center;
+    z-index:1 ;
+  }
+  .grid-container-for-nav
+  {
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit,minmax(10em,1fr));
+    z-index: 0;
+  }
+  p{
+    font-size: 1em;
+    min-height: 100%;
+  }
+  a 
+  {
+    font-size: .5em;
+  }
+  .card{
+    font-size: 2em;
+  }
   .button-nav
   {
     font-size: 1.5em;
   }
   .article-content
   {
-  font-size: min(1em,300%);
+  font-size: max(1em,200%);
   }
  
   .create-post-section
@@ -294,5 +334,3 @@ input
     font-size: 1em;
   }
 }
-/*
-  */
