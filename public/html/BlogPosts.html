@@ -42,7 +42,7 @@
         `<div class="grid-item">
             <a href="/blog/imagePost/${data._id}" class="anchor-buttons">
                 <div class="card">
-                <img  class="card-image" src ="../images/uploads/${data.photoPath}">
+                <img  class="card-image-post" src ="../images/uploads/${data.photoPath}">
                     <div class="card-body">
                     <p center;"class="card-title">${data.title}</p>
                     <p class="card-text">${data.description}</p> 
@@ -50,28 +50,29 @@
                 </div>
         </div> `; 
     }         
-        $(document).ready(function()
-        { 
-            fetch('/blog/getRecentPosts/',{mode:'cors'}).then(function(response)
-            {   
-                var data = response.json().then(function(data)
-                {
-                    for(const blogPost of data.reverse())
-                    {
-                        createCard(blogPost);
-                    }
-                });
-         
-            });   
-        });
-        
-    $(window).resize(function () 
+    $(document).ready(function()
     { 
-        $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
-        console.log("top")
+        
+        fetch('/blog/getRecentPosts/',{mode:'cors'}).then(function(response)
+        {   
+            var data = response.json().then(function(data)
+            {
+                for(const blogPost of data.reverse())
+                {
+                        createCard(blogPost);
+                }
+            });     
+        });   
     });
-    $(window).load(function () { 
-    $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);        
-});
+    window.addEventListener('load', function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
+    });
+    window.addEventListener('resize',function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
+    });
 </script>
 </html>

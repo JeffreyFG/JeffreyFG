@@ -6,7 +6,7 @@
             <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
         </head>
         
-        <nav>
+        <nav id="main-navbar"> 
             <div class="grid-container-for-nav">
                 <div class="grid-item">   
                     <h1 class="button-nav" onclick="window.location.href='/'">Home</h1>
@@ -78,6 +78,7 @@
             </div>
         </article>
         <script>
+            /*
 var locationInfo = document.getElementById("location-info");
 var locationButton = document.getElementById("location-button");
 var locationInfoLatitude = document.getElementById("location-input-latitude");
@@ -99,13 +100,18 @@ locationButton.onclick= function()
     locationInfo.innerText = "Geolocation is not supported by this browser.";
     }
 }
+*/
 
-$(window).resize(function () { 
-    $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
+    window.addEventListener('load', function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
     });
-    $(window).load(function () { 
-    $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);        
-});
+    window.addEventListener('resize',function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
+    });
 
         </script>
     </body>

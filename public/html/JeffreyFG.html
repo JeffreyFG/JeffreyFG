@@ -56,11 +56,15 @@
         </article>
     </body>
 <script>
-    $(window).resize(function () { 
-    $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
+    window.addEventListener('load', function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
     });
-    $(window).load(function () { 
-    $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);        
-});
+    window.addEventListener('resize',function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
+    });
 </script>
 </html>

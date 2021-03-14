@@ -6,7 +6,7 @@
             <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
 
         </head>
-        <nav>
+        <nav id ="main-navbar">
             <div class="grid-container-for-nav">
                 <div class="grid-item">   
                     <h1 class="button-nav" onclick="window.location.href='/'">Home</h1>
@@ -44,5 +44,16 @@
         </p>
         </article>
     </body>
-
+<script>
+    window.addEventListener('load', function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
+    });
+    window.addEventListener('resize',function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
+    });
+</script>
 </html>

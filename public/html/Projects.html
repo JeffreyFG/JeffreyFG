@@ -54,7 +54,7 @@ function creatCard(repo)
                 <div class="card">
                     <img src="../images/matrix-code.jpg" alt="Avatar" style="width:100%">
                     <div class="container">
-                        <h4><b>${repo.name}</b></h4>
+                        <h1><b>${repo.name}</b></h1>
                         <h4>${repo.language}<h4>
                     </div>
                 </div>
@@ -77,12 +77,16 @@ function creatCard(repo)
     }
     request.send();
 }
-$(window).resize(function () { 
-    $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);
+window.addEventListener('load', function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
     });
-    $(window).load(function () { 
-    $('body').css('padding-top', parseInt($('#main-navbar').css("height"))+10);        
-});
+    window.addEventListener('resize',function(event)
+    {
+        var navSize =document.getElementById("main-navbar").clientHeight;
+        document.body.style.paddingTop=""+navSize+"px";
+    });
     </script>
 
 </html>
