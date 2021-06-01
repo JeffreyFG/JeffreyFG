@@ -25,7 +25,7 @@ const app = express();
 //}
 //https.createServer(httpsOpttions,app)
 //app.get('*', function(req, res) {res.redirect('https://' + req.headers.host + req.url);})
-app.listen(80);
+app.listen(3000);
 //
 
 
@@ -43,7 +43,12 @@ app.use('/projects',projectsPageRouter);
 app.use('/blog',postRouter);
 app.use('/app',AppPageRouter);
 //Database connection
-mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true,useUnifiedTopology: true});
+var options = {
+  user:process.env.DB_USER,
+  pass:process.env.USER_PASSWORD,
+  useNewUrlParser: true,useUnifiedTopology: true,
+};
+mongoose.connect(process.env.DB_CONNECTION,options);
 const db = mongoose.connection;
 db.once('open',function()
 {
