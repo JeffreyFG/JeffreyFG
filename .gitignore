@@ -7,3 +7,5 @@ node_modules
 .sass-cache
 ./public/.wellknown
 ./public/.wellknown/*
+./ssl
+./ssl/*
