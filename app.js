@@ -15,18 +15,29 @@ const LandingPageRouter = require('./routes/LandingPage');
 const projectsPageRouter = require('./routes/Projects');
 const AppPageRouter = require('./routes/AppPage');
 const postRouter = require('./routes/Posts');
+//const { Certificate } = require('crypto');
 
 //https server config
 
 const app = express();
-//const httpsOpttions={
- // cert: fs.readFileSync(path.join(__dirname,'ssl','server.crt')),
- // cert: fs.readFileSync(path.join(__dirname,'ssl','server.key'))
-//}
-//https.createServer(httpsOpttions,app)
-//app.get('*', function(req, res) {res.redirect('https://' + req.headers.host + req.url);})
-app.listen(3000);
-//
+app.enable('trust proxy')
+var http = require('http');
+http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(3000);
+const certificate =fs.readFileSync(path.join(__dirname,'ssl','jeffreyfg_net.crt'));
+const certificateAutority = fs.readFileSync(path.join(__dirname,'ssl','jeffreyfg_net.ca-bundle'));
+const privateKey = fs.readFileSync(path.join(__dirname,'ssl','PrivateKey.key'));
+const passPhrase = process.env.privateKeyPashPhrase;
+const httpsOpttions={
+  ca:certificateAutority,
+  passphrase:passPhrase,
+  key:privateKey,
+  cert:certificate
+};
+const hostname = "jeffreyfg.net";
+
 
 
 app.use(express.urlencoded({extended:false}));  
@@ -69,4 +80,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.send(err);
 });
+const sslServer = https.createServer(httpsOpttions,app)
+sslServer.listen(3443);
 module.exports = app;
