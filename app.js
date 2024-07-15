@@ -25,11 +25,11 @@ var http = require('http');
 http.createServer(function (req, res) {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end();
-}).listen(3000);
+}).listen(8080);
 const certificate =fs.readFileSync(path.join(__dirname,'ssl','jeffreyfg_net.crt'));
 const certificateAutority = fs.readFileSync(path.join(__dirname,'ssl','jeffreyfg_net.ca-bundle'));
-const privateKey = fs.readFileSync(path.join(__dirname,'ssl','PrivateKey.key'));
-const passPhrase = process.env.privateKeyPashPhrase;
+const privateKey = fs.readFileSync(path.join(__dirname,'ssl','PRIVATEKEY.key'));
+const passPhrase = process.env.privateKeyPassPhrase;
 const httpsOpttions={
   ca:certificateAutority,
   passphrase:passPhrase,
@@ -55,8 +55,8 @@ app.use('/blog',postRouter);
 app.use('/app',AppPageRouter);
 //Database connection
 var options = {
-  user:process.env.DB_USER,
-  pass:process.env.USER_PASSWORD,
+  user:process.env.COLLECTION_USER,
+  pass:process.env.COLLECTION_USER_PASSWORD,
   useNewUrlParser: true,useUnifiedTopology: true,
 };
 mongoose.connect(process.env.DB_CONNECTION,options);
@@ -81,5 +81,5 @@ app.use(function(err, req, res, next) {
   res.send(err);
 });
 const sslServer = https.createServer(httpsOpttions,app)
-sslServer.listen(3443);
+sslServer.listen(8443);
 module.exports = app;

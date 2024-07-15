@@ -1,3 +1,3 @@
 #!/bin/bash
-mongod --config /etc/mongodb.conf --fork --logpath /data/logs/mongod.log
+mongod --config /etc/mongodb.conf --fork --logpath /data/log/mongod.log 
 pm2 start app.js
