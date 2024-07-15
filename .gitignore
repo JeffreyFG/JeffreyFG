@@ -10,3 +10,5 @@ node_modules
 
 
 ssl/
+
+.DS_Store
