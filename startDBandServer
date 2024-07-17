@@ -1,3 +1,0 @@
-#!/bin/bash
-sudo systemctl start mongodb 
-pm2 start app.js

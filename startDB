@@ -1,8 +1,2 @@
 #!/bin/bash
-#mongod --dbpath /data/db --fork --logpath /data/log/mongod.log 
-#mongod --config /etc/mongodb.conf --dbpath /data/db --fork --logpath /data/log/mongod.log 
-#mongod --config /etc/mongodb.conf --fork  --logpath /data/log/mongod.log 
-#mongod  --fork --logpath /data/log/mongod.log 
-#mongod   --logpath /data/log/mongod.log 
-
 sudo systemctl start mongodb

@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const fs = require('fs');
 require('dotenv').config();
+const cors = require("cors");
 
 //Routes
 const LandingPageRouter = require('./routes/LandingPage');
@@ -17,7 +18,7 @@ const postRouter = require('./routes/Posts');
 const app = express();
 app.enable('trust proxy')
 
-var PORT = 8080
+var PORT = 3000
 console.log("server activated visit http://localhost:8080/ , or https://jeffreyfg.net");
 app.listen(PORT, function(err)
 {
@@ -42,7 +43,7 @@ app.use(cookieParser());
 app.use('/', LandingPageRouter);
 app.use('/projects',projectsPageRouter);
 app.use('/blog',postRouter);
-app.use('/app',AppPageRouter);
+app.use('/app/*',AppPageRouter);
 //Database connection
 var options = {
   user:process.env.COLLECTION_USER,
