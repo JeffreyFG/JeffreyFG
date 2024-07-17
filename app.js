@@ -6,7 +6,6 @@ const logger = require('morgan');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const https = require('https');
 const fs = require('fs');
 require('dotenv').config();
 
@@ -15,27 +14,18 @@ const LandingPageRouter = require('./routes/LandingPage');
 const projectsPageRouter = require('./routes/Projects');
 const AppPageRouter = require('./routes/AppPage');
 const postRouter = require('./routes/Posts');
-//const { Certificate } = require('crypto');
-
-//https server config
-
 const app = express();
 app.enable('trust proxy')
-var http = require('http');
-http.createServer(function (req, res) {
-    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-    res.end();
-}).listen(8080);
-const certificate =fs.readFileSync(path.join(__dirname,'ssl','jeffreyfg_net.crt'));
-const certificateAutority = fs.readFileSync(path.join(__dirname,'ssl','jeffreyfg_net.ca-bundle'));
-const privateKey = fs.readFileSync(path.join(__dirname,'ssl','PRIVATEKEY.key'));
-const passPhrase = process.env.privateKeyPassPhrase;
-const httpsOpttions={
-  ca:certificateAutority,
-  passphrase:passPhrase,
-  key:privateKey,
-  cert:certificate
-};
+
+var PORT = 8080
+console.log("server activated visit http://localhost:8080/ , or https://jeffreyfg.net");
+app.listen(PORT, function(err)
+{
+  if (err) console.log("Error in server setup")
+  console.log("Server listening on Port", PORT);
+
+});
+
 const hostname = "jeffreyfg.net";
 
 
@@ -45,7 +35,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 
 //setting up routes
@@ -80,6 +70,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.send(err);
 });
-const sslServer = https.createServer(httpsOpttions,app)
-sslServer.listen(8443);
+
 module.exports = app;
