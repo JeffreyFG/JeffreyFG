@@ -2,10 +2,10 @@ var express = require('express');
 const router = express.Router();
 var path = require('path');
 const Post= require('./../models/postSchema');   
-const multer = require('multer');
 const sharp = require('sharp');
 const crypto = require('crypto');
 const { Console } = require('console');
+const fileUpload = require('express-fileupload');
 
 
 router.get('/', function(req, res, next) 
@@ -18,26 +18,11 @@ router.get('/imagePost/:id',function(req,res,next)
     res.sendFile("imagePost.html",{root:'public/html'});
 });
 
-
-var storage = multer.diskStorage(
-    {destination: function(req,file,cb)
-    {
-        cb(null,'public/images/uploads/')
-    },
-    filename: function(req,file,cb)
-    {
-        let fileExt = file.mimetype.split("/")[1];
-        let randomName = crypto.randomBytes(10).toString("hex");
-        cb(null,`${randomName}.${fileExt}`);
-
-    }
-});
-var uploader = multer({storage:storage});
 router.get('/createpostpage', function(req, res, next) 
 {
   res.sendFile(path.join(__dirname + '/../public/html/CreatePost.html'));
 });
-router.post('/createpostaction',uploader.single('pictureValue'),async function(request,response,next)
+router.post('/createpostaction',async function(request,response,next)
     {
         if(request.body.passwordValue==process.env.password)
         {

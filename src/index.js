@@ -9,6 +9,6 @@ import  "bootstrap/dist/css/bootstrap.css"
 
 root.render(<Router>
     <Routes>
-      <Route path="/app/" element={<Home/>} />
+      <Route path="/" element={<Home/>} />
     </Routes>
   </Router>);

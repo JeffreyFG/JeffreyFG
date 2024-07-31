@@ -6,6 +6,8 @@ const logger = require('morgan');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
+
 const fs = require('fs');
 require('dotenv').config();
 const cors = require("cors");
@@ -19,7 +21,7 @@ const app = express();
 app.enable('trust proxy')
 
 var PORT = 3000
-console.log("server activated visit http://localhost:8080/ , or https://jeffreyfg.net");
+console.log("server activated visit http://localhost:${PORT}/ , or https://jeffreyfg.net");
 app.listen(PORT, function(err)
 {
   if (err) console.log("Error in server setup")
@@ -32,6 +34,7 @@ const hostname = "jeffreyfg.net";
 
 
 app.use(express.urlencoded({extended:false}));  
+app.use(fileUpload());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(express.json());

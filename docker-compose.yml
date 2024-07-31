@@ -1,0 +1,54 @@
+version: "3"
+services:
+  express-backend-development:
+    container_name: "express-backend-development"
+    profiles:
+      - development
+    
+    build: .
+    command: npm run dev
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+  nginx-reverse-proxy-development:
+    container_name: "nginx-reverse-proxy-development"
+    profiles:
+      - development
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - "./JeffreyFG-development.conf:/etc/nginx/conf.d/JeffreyFG.conf"
+      - "./ssl/jeffreyfg_net.crt:/etc/nginx/ssl/server.crt"
+      - "./ssl/PRIVATE.key:/etc/nginx/ssl/server.key"
+      - "./ssl/jeffreyfg_net.ca-bundle:/etc/nginx/server.bundle"
+      - "./dist:/usr/share/nginx/html/JeffreyFG/public"
+
+############################
+  express-backend-production:
+    container_name: "express-backend-production"
+    profiles:
+      - production
+    build: .
+    command: npm run start
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - "3000:3000"
+  nginx-reverse-proxy-production:
+    container_name: "nginx-reverse-proxy-production"
+    profiles:
+      - production
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "./JeffreyFG-production.conf:/etc/nginx/sites-enabled/JeffreyFG.conf"
+      - "./ssl/jeffreyfg_net.crt:/etc/nginx/ssl/server.crt"
+      - "./ssl/PRIVATE.key:/etc/nginx/ssl/server.key"
+      - "./ssl/jeffreyfg_net.ca-bundle:/etc/nginx/server.bundle"
+      - "./public:/usr/share/nginx/html/JeffreyFG/public"
