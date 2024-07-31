@@ -1,6 +1,9 @@
 import React from "react";
 import { createRoot } from 'react-dom/client';
-import Home from "./pages/Home";
+import HomePage from "./pages/HomePage";
+import MainProjectsPage from "./pages/MainProjectsPage";
+import BlogPage from "./pages/BlogPage";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import "./styles/global.scss";
 const container = document.getElementById('root');
@@ -9,6 +12,8 @@ import  "bootstrap/dist/css/bootstrap.css"
 
 root.render(<Router>
     <Routes>
-      <Route path="/" element={<Home/>} />
+      <Route path="/app/Projects/" element={<MainProjectsPage/>} />
+      <Route path="/app/Blog/" element={<BlogPage/>} />
+      <Route path="/app/" element={<HomePage/>} />
     </Routes>
   </Router>);

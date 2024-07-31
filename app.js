@@ -14,6 +14,7 @@ const cors = require("cors");
 
 //Routes
 const LandingPageRouter = require('./routes/LandingPage');
+const ReactLandingPageRouter = require("./routes/ReactLangingPage");
 const projectsPageRouter = require('./routes/Projects');
 const AppPageRouter = require('./routes/AppPage');
 const postRouter = require('./routes/Posts');
@@ -21,7 +22,7 @@ const app = express();
 app.enable('trust proxy')
 
 var PORT = 3000
-console.log("server activated visit http://localhost:${PORT}/ , or https://jeffreyfg.net");
+console.log("server activated visit http://localhost:3000/ , or https://jeffreyfg.net");
 app.listen(PORT, function(err)
 {
   if (err) console.log("Error in server setup")
@@ -43,7 +44,8 @@ app.use(cookieParser());
 
 
 //setting up routes
-app.use('/', LandingPageRouter);
+app.use('/old', LandingPageRouter);
+app.use('/', ReactLandingPageRouter);
 app.use('/projects',projectsPageRouter);
 app.use('/blog',postRouter);
 app.use('/app/*',AppPageRouter);
