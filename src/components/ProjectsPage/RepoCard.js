@@ -7,7 +7,7 @@ export default function RepoCard({repo}) {
     
     <a href={repo.urlForRepo}>
     <div className="card shadow-sm">
-    <img src="../images/matrix-code.jpg" alt="Avatar" style={{width:100+"%"}}></img>
+    <img src="../../images/matrix-code.jpg" alt="Avatar" style={{width:100+"%"}}></img>
 
     <div className="card-body">
       <h1>{repo.nameOfRepo}</h1> 
