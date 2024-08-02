@@ -24,7 +24,8 @@ services:
       - "./ssl/jeffreyfg_net.crt:/etc/nginx/ssl/server.crt"
       - "./ssl/PRIVATE.key:/etc/nginx/ssl/server.key"
       - "./ssl/jeffreyfg_net.ca-bundle:/etc/nginx/server.bundle"
-      - "./dist:/usr/share/nginx/html/JeffreyFG/public"
+      - "./dist:/usr/share/nginx/html"
+      - "./public:/usr/share/nginx/html/public"
 
 ############################
   express-backend-production:

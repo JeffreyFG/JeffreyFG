@@ -1,9 +1,9 @@
 {
-    "test": ".*.js$",
+    
     "jsc": {
       "parser": {
         "syntax": "ecmascript",
-        "jsx": true
+        "tsx": true
       }
     }
   }
