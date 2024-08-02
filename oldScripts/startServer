@@ -1,8 +1,0 @@
-#!/bin/bash
-#pm2 start app.js
-if [ $1="macos" ] 
-then
-   nginx #brew services start nginx
-else
-    sudo systemctl start nginx 
-fi
