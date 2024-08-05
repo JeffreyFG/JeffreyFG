@@ -7,15 +7,14 @@ import repositoryType from "../components/ProjectsPage/types/repositoryType.ts";
 export default function MainProjectsPage() 
 {
 
-  const [repositories, setRepos] = useState<repositoryType[] | null>(null);
+  const [repositories, setUsers] = useState<repositoryType[] | null>(null);
   useEffect(() => {
 
     const getData = async () => {
       try {
         let response = await fetch("https://api.github.com/users/JeffreyFG/repos");
         let data = await response.json();
-        console.log(data)
-        setRepos(data);
+        setUsers(data);
       } catch (err) {
         console.log(err);
       }
@@ -39,11 +38,12 @@ export default function MainProjectsPage()
       <div className="container">
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <>
-          { repositories?(
-            
-               repositories.length > 0 && repositories.map((repository) => {<div className="col"><RepoCard {...repository}></RepoCard></div>})
-            ): (
-              <div>Loading...</div>)}
+          {
+            repositories && repositories.length > 0 && repositories.map((repository,index) => 
+              {
+              return <RepoCard key={index} {...repository}></RepoCard>
+            }) 
+          } 
         </>
       </div>
       </div>

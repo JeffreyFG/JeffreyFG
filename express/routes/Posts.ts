@@ -2,14 +2,12 @@ import express, { NextFunction } from "express"
 import mongoose from 'mongoose';
 const router = express.Router();
 
-import schemaForPosts from '../models/postSchema';
+import Post from '../models/postSchema';
 import multer from "multer";  
 
-const sharp = require('sharp');
-const crypto = require('crypto');
-const { Console } = require('console');
-const fileUpload = require('express-fileupload');
-const PostModel = mongoose.model("Post",schemaForPosts);
+import sharp from 'sharp';
+import crypto from 'crypto';
+//const PostModel = mongoose.model("Post",schemaForPosts);
 var storage = multer.diskStorage(
     {destination: function(request:Express.Request,file,cb)
     {
@@ -35,7 +33,7 @@ router.post('/createpostaction', uploader.single('pictureValue'),function(reques
 
                 
 
-                const post= new PostModel({
+                const post= new Post({
                     title:request.body.titleValue,
                     description:request.body.descriptionValue,
                     photoPath:fileAsThumbnail});
@@ -58,10 +56,8 @@ router.get('/getRecentPosts',async function(request,response,next)
 {
     try
     {
-        var recentposts= await PostModel.find();
-        //console.log(recentposts);
+        var recentposts= await Post.find();
         response.json(recentposts);
-
     }
     catch(exception)
     {
@@ -77,7 +73,7 @@ router.get('/getImageByID/:id',async function(request, response, next)
     {
         let _id = request.params.id;
         console.log(_id);
-        const postForID = await PostModel.find({_id:_id});
+        const postForID = await Post.find({_id:_id});
         response.json(postForID);
     }
     catch(e)
@@ -87,4 +83,4 @@ router.get('/getImageByID/:id',async function(request, response, next)
   
 });
 
-module.exports =router;
+export default router;

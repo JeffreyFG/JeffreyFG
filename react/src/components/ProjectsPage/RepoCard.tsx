@@ -3,7 +3,7 @@ export default function RepoCard(repo:repositoryType) {
 
 
   return (
-    
+    <div className="col">
     <a href={repo.urlForRepo}>
     <div className="card shadow-sm">
     <img src="/public/images/matrix-code.jpg" alt="Avatar" style={{width:100+"%"}}></img>
@@ -17,5 +17,5 @@ export default function RepoCard(repo:repositoryType) {
         <small className="text-muted">9 mins</small>
       </div>
     </div>
-  </div></a>);
+  </div></a></div>);
 }

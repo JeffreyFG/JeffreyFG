@@ -1,11 +1,12 @@
 import BodyComponent from "../components/Body.tsx"
+//import profilePicture from "../../../public/images/profilePicture.jpeg"
 export default function Home()
 {
     return(
         <BodyComponent>
         <div className="container mt-5 mb-5">
             <div className="row no-gutters">
-            <div className="col-md-4 col-lg-4"><img src="/public/images/profilePicture.jpeg"/></div>
+            <div className="col-md-4 col-lg-4"><img src="/images/profilePicture.jpeg"/></div>
                 <div className="col-md-8 col-lg-8">
 
                     <div className="d-flex flex-column">

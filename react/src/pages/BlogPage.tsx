@@ -12,7 +12,7 @@ export default function BlogPage()
     {
       try 
       {
-        let response = await fetch("localhost:3000/api/blog/getRecentPosts/");
+        let response = await fetch("/api/blog/getRecentPosts");
         let data = await response.json();
         setBlogs(data);
       } 
@@ -40,8 +40,7 @@ export default function BlogPage()
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> 
         <>
         {
-          blogPosts?(blogPosts.length > 0 && blogPosts.reverse().map((blogPostParameter) =>{ <BlogCard {...blogPostParameter}/>})):
-          <div>Loading...</div>
+          blogPosts&& blogPosts.length > 0 && blogPosts.reverse().map((blogPostParameter,index) =>{ return <BlogCard key={index} {...blogPostParameter}/>})
         }
         </>  
         </div>

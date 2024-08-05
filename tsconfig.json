@@ -1,8 +1,10 @@
 {
   "files": [],
   "compilerOptions": {
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    // "module": "ESNext",
+     "esModuleInterop": true,
+    // "allowSyntheticDefaultImports": true,
+    "outDir": "./distributionExpress"
     // ... rest
   },
   "references": [
@@ -12,5 +14,5 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
 }

@@ -27,5 +27,5 @@ const schemaForPosts = new mongoose.Schema({
 
 })
 
-export default schemaForPosts;
-//module.exports =  schemaForPosts//mongoose.model('blogData',schemaForPosts);// this name is responsable for creating the name in the data base.
+export default  mongoose.model('blogData',schemaForPosts);
+//module.exports =  mongoose.model('blogData',schemaForPosts);// this name is responsable for creating the name in the data base.
