@@ -4,7 +4,7 @@ services:
     container_name: "express-backend-development"
     profiles:
       - development
-    
+
     build: .
     command: npm run start
     volumes:
@@ -23,8 +23,10 @@ services:
       - "./nginxConfigurationFiles/JeffreyFG-development.conf:/etc/nginx/conf.d/JeffreyFG.conf"
       - "./dist:/usr/share/nginx/html"
       - "./public:/usr/share/nginx/html/public"
-
-############################
+    depends_on:
+      express-backend-development:
+        condition: service_started
+  ############################
   express-backend-production:
     container_name: "express-backend-production"
     profiles:

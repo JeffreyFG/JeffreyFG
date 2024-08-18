@@ -23,5 +23,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./react/src"]
+  "include": ["./react/src", "express/secrets.ts"]
 }

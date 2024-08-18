@@ -7,18 +7,22 @@ interface UserDocument extends mongoose.Document {
 }
 
 const UserSchema = new mongoose.Schema({
-  Open: {
+  firstName: {
     type: String,
     required: true,
   },
-  avatar: {
+  lastName: {
     type: String,
-    default: "",
+    required: true,
   },
-  name: {
+  picture: {
+    type: String,
+    required: true,
+  },
+  email: {
     type: String,
     required: true,
   },
 });
-
+//#export default  mongoose.model('blogData',schemaForPosts);
 export default mongoose.model<UserDocument>("User", UserSchema);
