@@ -1,34 +1,51 @@
 import Form from "react-bootstrap/esm/Form";
-import { useLocalStorage } from "../hooks/useLocalStorage";
+//import { useLocalStorage } from "../hooks/useLocalStorage";
 import Button from "react-bootstrap/esm/Button";
-import { Jwt } from "jsonwebtoken";
+import userType from "../types/userType";
+import axios from "axios";
+import { useState } from "react";
+//import { FormEvent } from "react";
 
 interface FormElements extends HTMLFormControlsCollection {
-  titleInput: HTMLInputElement;
-  descriptionInput: HTMLInputElement;
-  fileInput: HTMLInputElement;
-  token: HTMLInputElement;
+  titleValue: HTMLInputElement;
+  descriptionValue: HTMLInputElement;
+  files: HTMLInputElement;
 }
-interface postFormElement extends HTMLFormElement {
-  // now we can override the elements type to be an HTMLFormControlsCollection
-  // of our own design...
+interface PostFormElement extends HTMLFormElement {
   readonly elements: FormElements;
+  readonly files: FileList;
 }
 
-export default function CreatePostForm({ onSubmitForm }: { onSubmitForm: (title: string, description: string, file: File, token: string) => void }) {
-  function handleSubmit(event: React.FormEvent<postFormElement>) {
+export default function CreatePostForm(user: userType) {
+  const [currentImage, setCurrentImage] = useState<FileList>();
+
+  const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles: FileList = event.target.files!;
+    setCurrentImage(selectedFiles);
+  };
+
+  const submitForm = (event: React.FormEvent<PostFormElement>) => {
     event.preventDefault();
+    console.log("contents of event from submitForm():   ", event);
+    const url = "/api/blog/createPostAction";
+    let formData: FormData = new FormData();
+    formData.append("titleValue", event.currentTarget.elements.titleValue.value);
+    formData.append("descriptionValue", event.currentTarget.elements.descriptionValue.value);
+    formData.append("file", currentImage![0]);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "content-type": "multipart/form-data",
+      },
+    };
 
-    const titleValue: string = event.currentTarget.elements.titleInput.value;
-    const descriptionValue: string = event.currentTarget.elements.descriptionInput.value;
-    const fileValue: File = event.currentTarget.files[0];
-    onSubmitForm(titleValue, descriptionValue, fileValue, token!);
-  }
-  const initialValue = "";
-  const [token] = useLocalStorage<string>("token", initialValue);
-
+    axios.post(url, formData, config).then((response) => {
+      console.log(response.data);
+    });
+  };
+  //
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={submitForm}>
       <Form.Control id="titleInput" type="text" placeholder="Tile of blog post" name="titleValue" />
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Label>Description for Blog Post</Form.Label>
@@ -36,9 +53,9 @@ export default function CreatePostForm({ onSubmitForm }: { onSubmitForm: (title:
       </Form.Group>
       <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>Picture for Blog Post</Form.Label>
-        <Form.Control type="file" name="pictureValue" accept="image/*" />
+        <Form.Control accept="image/*" type="file" onChange={selectImage} />
       </Form.Group>
-      <Button id="fileInput" as="input" type="submit" value="Submit" />{" "}
+      <Button as="input" type="submit" value="Submit" />{" "}
     </Form>
   );
 }

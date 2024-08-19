@@ -22,10 +22,6 @@ const useFetch = (url: string | URL | Request) => {
         console.log("this is the userdata retured from the server" + data);
         if (data?.user) {
           localStorage.setItem("user", JSON.stringify(data?.user));
-          const user = localStorage.getItem("user");
-          console.log(
-            "this is the the user data from the local storage" + user
-          );
           window.location.reload();
         }
 

@@ -23,7 +23,6 @@ async function verifyGoogleToken(token) {
 }
 
 router.post("/login", async (req, res) => {
-  const JWT_SECRET: string = new String(process.env.JWT_SECRET).toString();
   try {
     if (req.body.credential) {
       const verificationResponse = await verifyGoogleToken(req.body.credential);
@@ -45,7 +44,10 @@ router.post("/login", async (req, res) => {
           message: "You are not registered. Please sign up",
         });
       }
-
+      const payload: jwt.JwtPayload = { email: profile?.email };
+      const secret: jwt.Secret = process.env.JWT_SECRET!;
+      const signOptions: jwt.SignOptions = { expiresIn: "1h" };
+      const tokenValue: string = jwt.sign(payload, secret, signOptions);
       res.status(201).json({
         message: "Login was successful",
         user: {
@@ -53,13 +55,7 @@ router.post("/login", async (req, res) => {
           lastName: profile?.family_name,
           picture: profile?.picture,
           email: profile?.email,
-          token: jwt.sign(
-            { email: profile?.email, signInTime: Date.now() },
-            JWT_SECRET,
-            {
-              expiresIn: "1h",
-            }
-          ),
+          token: tokenValue,
         },
       });
     }
@@ -88,7 +84,10 @@ router.post("/signup", async (req, res) => {
       }
 
       const profile = verificationResponse?.payload;
-      const JWT_SECRET: string = new String(process.env.JWT_SECRET).toString();
+      const payload: jwt.JwtPayload = { email: profile?.email };
+      const secret: jwt.Secret = process.env.JWT_SECRET!;
+      const signOptions: jwt.SignOptions = { expiresIn: "1h" };
+      const tokenValue: string = jwt.sign(payload, secret, signOptions);
       console.log("email delivered: " + profile?.email);
       const users = await user.find({ email: profile?.email }).exec();
       const existsInDB = users.length > 0;
@@ -110,9 +109,7 @@ router.post("/signup", async (req, res) => {
                 given_name: profile?.given_name,
                 family_name: profile?.family_name,
                 email: profile?.email,
-                token: jwt.sign({ email: profile?.email }, JWT_SECRET, {
-                  expiresIn: "1d",
-                }),
+                token: tokenValue,
               },
             });
           })
@@ -129,9 +126,7 @@ router.post("/signup", async (req, res) => {
             given_name: profile?.given_name,
             family_name: profile?.family_name,
             email: profile?.email,
-            token: jwt.sign({ email: profile?.email }, JWT_SECRET, {
-              expiresIn: "1d",
-            }),
+            token: tokenValue,
           },
         });
       }

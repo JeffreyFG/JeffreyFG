@@ -6,7 +6,7 @@ services:
       - development
 
     build: .
-    command: npm run start
+    command: npm run devStart
     volumes:
       - .:/usr/app/
       - /usr/app/node_modules
@@ -53,3 +53,13 @@ services:
       - "./ssl/PRIVATE.key:/etc/nginx/ssl/server.key"
       - "./ssl/jeffreyfg_net.ca-bundle:/etc/nginx/server.bundle"
       - "./public:/usr/share/nginx/html/JeffreyFG/public"
+  mongodb:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME: root
+      - MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 0.0.0.0:27017:27017
+    volumes:
+      - ./mongodb/data:/data/db
+    entrypoint: "sleep 3000"

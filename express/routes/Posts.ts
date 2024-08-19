@@ -1,17 +1,13 @@
 import express, { NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
-const router = express.Router();
-
+import path from "path";
 import Post from "../models/postSchema";
 import multer from "multer";
-
-import sharp from "sharp";
 import crypto from "crypto";
-//const PostModel = mongoose.model("Post",schemaForPosts);
+const router = express.Router();
 var storage = multer.diskStorage({
   destination: function (request: Express.Request, file, cb) {
-    cb(null, "public/images/uploads/");
+    cb(null, "/dist/images/uploads");
   },
   filename: function (req, file, cb) {
     let fileExt = file.mimetype.split("/")[1];
@@ -19,51 +15,61 @@ var storage = multer.diskStorage({
     cb(null, `${randomName}.${fileExt}`);
   },
 });
-var uploader = multer({ storage: storage });
-router.post(
-  "/createPostAction",
-  uploader.single("pictureValue"),
-  function (request: express.Request, response: express.Response) {
-    const tokenHeaderKey = "jwt-token";
-    const jwtSecretKey: String = new String(process.env.DIY_JWT_SECRET);
-    const token: String = new String(request.headers[tokenHeaderKey]);
-    try {
-      const verified = jwt.verify(token.toString(), jwtSecretKey.toString());
+function checkFileType(file): boolean {
+  const filetypes = /jpeg|jpg|png|gif/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+  return mimetype && extname;
+}
+const uploader = multer({ storage: storage }).single("file");
+router.post("/createPostAction", function (request: express.Request, response: express.Response) {
+  const jwtSecretKey: jwt.Secret = process.env.JWT_SECRET!;
+  const authHeader = request.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  try {
+    if (token && token != "undefined") {
+      const verified = jwt.verify(token.toString(), jwtSecretKey);
       if (verified) {
-        if (request && request.file) {
-          const pathArray: String[] = request.file.filename.split("/");
-          const fileAsThumbnail: String = pathArray[pathArray.length - 1];
+        uploader(request, response, (error) => {
+          console.log(request.file);
+          if (request && request.file) {
+            const fileToSave: Express.Multer.File = request.file;
+            const filetypeOk: boolean = checkFileType(fileToSave);
+            if (filetypeOk) {
+              const pathArray: String[] = request.file.filename.split("/");
+              const fileAsThumbnail: String = pathArray[pathArray.length - 1];
 
-          const post = new Post({
-            title: request.body.titleValue,
-            description: request.body.descriptionValue,
-            photoPath: fileAsThumbnail,
-          });
-          console.log("before saving");
-          try {
-            const newPost = post.save();
-            response.status(201).redirect("/blog");
-          } catch (err) {
-            response.status(400);
-            console.log("error in creating post");
-            console.log(err);
+              const post = new Post({
+                title: request.body.titleValue,
+                description: request.body.descriptionValue,
+                photoPath: fileAsThumbnail,
+              });
+              console.log("before saving");
+              try {
+                const newPost = post.save();
+                response.status(201).redirect("/blog");
+              } catch (error) {
+                response.status(500).json({ message: "error in creating post: " + error });
+              }
+            } else {
+              return response.status(415).json({ message: "File type not supported" });
+            }
+          } else {
+            return response.status(406).json({ message: "File not present" });
           }
-        }
-
-        return response
-          .status(200)
-          .json({ safehouseKey: "under-the-doormat", message: "success" })
-          .redirect("/blog");
+        });
       } else {
         // Access Denied
-        return response.status(401).json({ message: "error" });
+        return response.status(401).json({ message: "JWT token invalid" });
       }
-    } catch (error) {
-      // Access Denied
-      return response.status(401).json({ message: "error" });
     }
+  } catch (error) {
+    // Access Denied
+    console.log("error in validation of token " + token + "\n" + error + "\n");
+    return response.status(500).json({ message: "error in validation" + error });
   }
-);
+});
 router.get("/getRecentPosts", async function (request, response, next) {
   try {
     var recentposts = await Post.find();

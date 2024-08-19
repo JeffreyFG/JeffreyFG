@@ -3,5 +3,6 @@ interface userInterface {
   firstName: string;
   lastName: string;
   picture: string;
+  token: string;
 }
 export default userInterface;
