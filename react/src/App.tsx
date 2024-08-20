@@ -25,8 +25,7 @@ function App() {
     token: "",
   };
   const [user] = useLocalStorage<userInterface>("user", initialValue);
-
-  if (user?.email) {
+  if (user) {
     window.user = true;
   } else {
     window.user = false;
@@ -36,12 +35,11 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/createPostPage" element={user?.email ? <CreatePostPage {...user} /> : <Navigate replace to="/login" />} />
+          <Route path="/createPostPage" element={user ? <CreatePostPage {...user} /> : <Navigate replace to="/login" />} />
           <Route path="/Projects" element={<ProjectsPage />} />
           <Route path="/Blog" element={<BlogPage />} />
-          <Route path="/login" element={!user ? <LoginPage /> : <Navigate replace to="/createPostPage" />} />
-          SignUpPage
-          <Route path="/signUp" element={!user ? <SignUpPage /> : <Navigate replace to="/createPostPage" />} />
+          <Route path="/login" element={<LoginPage /> } />
+          <Route path="/signUp" element={<SignUpPage />} />
         </Routes>
       </Router>
     </>

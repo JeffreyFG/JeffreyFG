@@ -7,7 +7,7 @@
     "start": "ts-node ./express/app.ts",
     "devBoth": "concurrently \"npm run build\" \"npm run devStart\"",
     "dev": "vite",
-    "build": "tsc -b && vite build --mode development",
+    "build": "tsc -b && vite build --mode production",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

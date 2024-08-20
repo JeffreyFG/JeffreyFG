@@ -1,36 +1,22 @@
 // Signup.jsx
-import { useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import BodyComponent from "../components/BodyComponent";
-
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 const SignUpPage = function () {
   const { error, loading, handleGoogle } = useFetch(
-    "http://localhost/api/auth/signup"
+    "https://JeffreyFG.net/api/auth/login"
   );
-
-  useEffect(() => {
-    /* global google */
-    window.google.accounts.id.initialize({
-      client_id:
-        "408912486691-t31d61dclvfedml4ahpd11o3i676nou1.apps.googleusercontent.com",
-      callback: handleGoogle,
-    });
-
-    window.google.accounts.id.renderButton(
-      document.getElementById("signUpDiv"),
-      {
-        // type: "standard",
-        theme: "filled_black",
-        // size: "small",
-        text: "continue_with",
-        shape: "pill",
-      }
-    );
-  }, [handleGoogle]);
-
+  <GoogleLogin
+    onSuccess={(credentialResponse: CredentialResponse) => {
+      handleGoogle(credentialResponse);
+    }}
+    onError={() => {
+      console.log("Login Failed:  ", error);
+    }}
+  />;
   return (
     <BodyComponent>
       <p style={{ textAlign: "center" }}>

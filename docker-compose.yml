@@ -1,4 +1,3 @@
-version: "3"
 services:
   express-backend-development:
     container_name: "express-backend-development"
@@ -37,29 +36,33 @@ services:
       - .:/usr/app/
       - /usr/app/node_modules
     ports:
-      - 3000:3000
+      - 127.0.0.1:3000:3000
   nginx-reverse-proxy-production:
     container_name: "nginx-reverse-proxy-production"
     profiles:
       - production
     image: nginx:latest
     ports:
-      - 80:80
-      - 443:443
-      - 3000:3000
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
     volumes:
-      - "./JeffreyFG-production.conf:/etc/nginx/sites-enabled/JeffreyFG.conf"
+      - "./nginxConfigurationFiles/JeffreyFG-production.conf:/etc/nginx/conf.d/JeffreyFG.conf"
       - "./ssl/jeffreyfg_net.crt:/etc/nginx/ssl/server.crt"
       - "./ssl/PRIVATE.key:/etc/nginx/ssl/server.key"
-      - "./ssl/jeffreyfg_net.ca-bundle:/etc/nginx/server.bundle"
-      - "./public:/usr/share/nginx/html/JeffreyFG/public"
+      - "./ssl/ssl.pass:/etc/nginx/ssl/ssl.pass"
+      - "./ssl/jeffreyfg_net.ca-bundle:/etc/nginx/ssl/server.bundle"
+      - "./dist:/usr/share/nginx/html"
+      - "./public:/usr/share/nginx/html/public"
   mongodb:
-    image: mongo
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME: root
-      - MONGO_INITDB_ROOT_PASSWORD: example
+    image: mongo:6-jammy
+    container_name: "mongoDB"
+    profiles:
+      - development
+      - production
     ports:
-      - 0.0.0.0:27017:27017
+      - 127.0.0.1:27017:27017
     volumes:
-      - ./mongodb/data:/data/db
-    entrypoint: "sleep 3000"
+      - ./mongodb:/data/db
+      - ./gzDump.gz:/data/gzDump.gz
+volumes:
+  dbdata6:

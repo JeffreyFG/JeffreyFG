@@ -2,8 +2,9 @@ import mongoose from "mongoose";
 
 interface UserDocument extends mongoose.Document {
   email: string;
-  avatar: string;
-  name: string;
+  picture: string;
+  firstName: string;
+  lastName: string;
 }
 
 const UserSchema = new mongoose.Schema({

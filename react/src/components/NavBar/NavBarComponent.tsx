@@ -4,15 +4,13 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/esm/Button";
-//import { GoogleLogin } from "@react-oauth/google";
-
-//import { GoogleLogin } from '@react-oauth/google';
+import { googleLogout } from "@react-oauth/google";
 import "bootstrap/js/src/collapse.js";
 const logout = () => {
+  googleLogout();
   localStorage.removeItem("user");
   console.log("logged out");
-  history.pushState(null, "", "/login");
-  window.location.replace("/login");
+  window.location.reload();
 };
 
 export default function NavBarComponent() {
@@ -47,7 +45,11 @@ export default function NavBarComponent() {
     if (window.user) {
       return (
         <Nav.Link href="#">
-          <Button variant="outline-danger" style={{ margin: "2px" }} onClick={logout}>
+          <Button
+            variant="outline-danger"
+            style={{ margin: "2px" }}
+            onClick={logout}
+          >
             Logout
           </Button>
         </Nav.Link>
