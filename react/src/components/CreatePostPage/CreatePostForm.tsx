@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/esm/Form";
 //import { useLocalStorage } from "../hooks/useLocalStorage";
 import Button from "react-bootstrap/esm/Button";
-import userType from "../types/userType";
+import userType from "../../types/userType";
 import axios from "axios";
 import { useState } from "react";
 //import { FormEvent } from "react";
@@ -29,8 +29,14 @@ export default function CreatePostForm(user: userType) {
     console.log("contents of event from submitForm():   ", event);
     const url = "/api/blog/createPostAction";
     let formData: FormData = new FormData();
-    formData.append("titleValue", event.currentTarget.elements.titleValue.value);
-    formData.append("descriptionValue", event.currentTarget.elements.descriptionValue.value);
+    formData.append(
+      "titleValue",
+      event.currentTarget.elements.titleValue.value
+    );
+    formData.append(
+      "descriptionValue",
+      event.currentTarget.elements.descriptionValue.value
+    );
     formData.append("file", currentImage![0]);
     const config = {
       headers: {
@@ -46,10 +52,20 @@ export default function CreatePostForm(user: userType) {
   //
   return (
     <Form onSubmit={submitForm}>
-      <Form.Control id="titleInput" type="text" placeholder="Tile of blog post" name="titleValue" />
+      <Form.Control
+        id="titleInput"
+        type="text"
+        placeholder="Tile of blog post"
+        name="titleValue"
+      />
       <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
         <Form.Label>Description for Blog Post</Form.Label>
-        <Form.Control id="descriptionInput" as="textarea" rows={3} name="descriptionValue" />
+        <Form.Control
+          id="descriptionInput"
+          as="textarea"
+          rows={3}
+          name="descriptionValue"
+        />
       </Form.Group>
       <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>Picture for Blog Post</Form.Label>

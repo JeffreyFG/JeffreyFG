@@ -21,7 +21,10 @@ async function verifyGoogleToken(token) {
     return { error: "Invalid user detected. Please try again" };
   }
 }
-
+router.post("/canSiginUp", async (request, response) => {
+  const canSiginUp: boolean = process.env.ACCEPTING_NEW_PROFILES === "true";
+  response.status(200).json({ canSiginUp: canSiginUp });
+});
 router.post("/login", async (request, response) => {
   try {
     if (request.body.credential) {

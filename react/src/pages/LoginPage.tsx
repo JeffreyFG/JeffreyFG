@@ -9,15 +9,6 @@ export default function LoginPage() {
     "https://JeffreyFG.net/api/auth/login"
   );
 
-  <GoogleLogin
-    onSuccess={(credentialResponse: CredentialResponse) => {
-      handleGoogle(credentialResponse);
-    }}
-    onError={() => {
-      console.log("Login Failed:  ", error);
-    }}
-  />;
-
   return (
     <BodyComponent>
       <main
@@ -29,7 +20,19 @@ export default function LoginPage() {
         }}
       >
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {loading ? <div>Loading....</div> : <div id="loginDiv"></div>}
+        {loading ? (
+          <div>Loading....</div>
+        ) : (
+          <GoogleLogin
+            onSuccess={(credentialResponse: CredentialResponse) => {
+              handleGoogle(credentialResponse);
+            }}
+            onError={() => {
+              console.log("Login Failed:  ", error);
+            }}
+            useOneTap
+          />
+        )}
       </main>
     </BodyComponent>
   );
