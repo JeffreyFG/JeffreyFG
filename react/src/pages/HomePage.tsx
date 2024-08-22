@@ -33,5 +33,15 @@ export default function Home() {
         </Col>
       </Row>
     </BodyComponent>
+
+	
   );
+/*  Hello thank you for comming to my website. My name is
+                  JeffreyFG, I am the owner of Tessellatum Propositum. I design
+                  and develop websites for small bisuness and clients. This
+                  website serves as a expanded portfoilio for my skills as a
+                  full stack developer, and as a gallery for potential clients
+                  to see my previous works. If you have any questions are would
+                  like to set up a meeting to discuss a potenial website please
+                  contact me at JeffreyFG@Outlook.com .*/
 }
