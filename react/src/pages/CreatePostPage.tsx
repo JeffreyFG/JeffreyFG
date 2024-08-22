@@ -1,6 +1,4 @@
 import BodyComponent from "../components/BodyComponent.tsx";
-//import Col from "react-bootstrap/Col";
-//import Row from "react-bootstrap/Row";
 import userType from "../types/userType.ts";
 import CreatePostForm from "../components/CreatePostPage/CreatePostForm.tsx";
 

@@ -23,7 +23,7 @@ export default function NavBarComponent() {
   ];
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar fixed="top" expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="/">Jeffrey FG</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

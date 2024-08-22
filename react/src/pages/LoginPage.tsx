@@ -34,6 +34,8 @@ export default function LoginPage() {
           />
         )}
       </main>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {loading ? <div>Loading....</div> : <div id="loginDiv"></div>}
     </BodyComponent>
   );
 }
