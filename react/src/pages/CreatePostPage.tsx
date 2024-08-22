@@ -3,6 +3,7 @@ import BodyComponent from "../components/BodyComponent.tsx";
 //import Row from "react-bootstrap/Row";
 import userType from "../types/userType.ts";
 import CreatePostForm from "../components/CreatePostForm.tsx";
+import Container from "react-bootstrap/esm/Container";
 
 export default function CreatePostPage(user: userType) {
   return (

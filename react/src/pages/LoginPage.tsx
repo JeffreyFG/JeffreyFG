@@ -20,17 +20,8 @@ export default function LoginPage() {
 
   return (
     <BodyComponent>
-      <main
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {loading ? <div>Loading....</div> : <div id="loginDiv"></div>}
-      </main>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {loading ? <div>Loading....</div> : <div id="loginDiv"></div>}
     </BodyComponent>
   );
 }

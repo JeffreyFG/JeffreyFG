@@ -22,21 +22,13 @@ const SignUpPage = function () {
       <p style={{ textAlign: "center" }}>
         <h1>Register to continue</h1>
       </p>
-      <main
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {loading ? (
-          <div>Loading....</div>
-        ) : (
-          <div id="signUpDiv" data-text="signup_with"></div>
-        )}
-      </main>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {loading ? (
+        <div>Loading....</div>
+      ) : (
+        <div id="signUpDiv" data-text="signup_with"></div>
+      )}
     </BodyComponent>
   );
 };
