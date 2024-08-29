@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import RepoCard from "../components/ProjectsPage/RepoCard.tsx";
-import Body from "../components/BodyComponent.tsx";
 import repositoryType from "../components/ProjectsPage/types/repositoryType.ts";
 import BodyComponent from "../components/BodyComponent.tsx";
 
