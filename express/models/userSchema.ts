@@ -23,7 +23,17 @@ const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique:true
   },
+  tokenString:{
+    type:String,
+    required:true,
+  },
+  tokenCreationDate:
+  {
+    type:Date,
+    required:true
+  }
 });
 //#export default  mongoose.model('blogData',schemaForPosts);
 export default mongoose.model<UserDocument>("User", UserSchema);

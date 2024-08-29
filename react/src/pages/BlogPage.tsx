@@ -24,7 +24,7 @@ export default function BlogPage() {
           <div className="col-lg-6 col-md-8 mx-auto">
             <h1 className="fw-light">Jeffrey's Personal Blog</h1>
             <p>
-              Wellcome to my blog. I post here time to time in order to catalog
+              Welcome to my blog. I post here time to time in order to catalog
               work and or technologies that I am excited about
             </p>
           </div>

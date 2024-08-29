@@ -1,12 +1,10 @@
 //Imports
 import express from "express";
-import authRouter from "./routes/auth.route";
+import { authRouter } from "./routes/auth.route";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import fileUpload from "express-fileupload";
 import postRouter from "./routes/Posts";
 import * as dotenv from "dotenv";
-import http from "https";
 const cors = require("cors");
 
 dotenv.config();
@@ -32,7 +30,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/blog", postRouter);
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://JeffreyFG.net"],
     methods: "GET,POST,PUT,DELETE,OPTIONS",
   })
 );
@@ -52,10 +50,7 @@ if (connectionString != null) {
 }
 
 // catch 404 and forward to error handler
-app.use(function (
-  requestArgument: Express.Request,
-  responseArgument: express.Response
-) {
+app.use(function (requestArgument: Express.Request, responseArgument: express.Response) {
   responseArgument.status(404).sendFile("./public/html/Error.html");
 });
 

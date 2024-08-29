@@ -19,6 +19,7 @@ export default function LoginPage() {
           alignItems: "center",
         }}
       >
+        <p>My website used Google's open auth standard in conjunction with my own autherzation process</p>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {loading ? (
           <div>Loading....</div>

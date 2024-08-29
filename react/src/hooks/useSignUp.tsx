@@ -2,9 +2,9 @@ import { useState } from "react";
 import canSignUpInterface from "../interfaces/canSignUpInterface";
 
 const useSignUp = () => {
-  const [isSignUpPermitted, setisSignUpPermitted] = useState<boolean>(false);
+  const [isSignUpPermitted, setIsSignUpPermitted] = useState<boolean>(false);
   const getPermissionToSignUp = () => {
-    const urlForFetch: string = "https://JeffreyFG.net/api/auth/login";
+    const urlForFetch: string = "https://JeffreyFG.net/api/auth/canSignUp";
     fetch(urlForFetch, {
       method: "POST",
       headers: {
@@ -13,7 +13,7 @@ const useSignUp = () => {
       body: JSON.stringify({}),
     }).then((response) => {
       response.json().then((response: canSignUpInterface) => {
-        setisSignUpPermitted(response.canSignUp);
+        setIsSignUpPermitted(response.canSignUp);
       });
     });
   };

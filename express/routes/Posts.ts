@@ -4,6 +4,7 @@ import path from "path";
 import Post from "../models/postSchema";
 import multer from "multer";
 import crypto from "crypto";
+import { verifyGoogleToken, verifyGoogleEmail } from "./auth.route";
 const router = express.Router();
 var storage = multer.diskStorage({
   destination: function (request: Express.Request, file, cb) {
@@ -22,43 +23,45 @@ function checkFileType(file): boolean {
   return mimetype && extname;
 }
 const uploader = multer({ storage: storage }).single("file");
-router.post("/createPostAction", function (request: express.Request, response: express.Response) {
-  const jwtSecretKey: jwt.Secret = process.env.JWT_SECRET!;
+router.post("/createPostAction", async function (request: express.Request, response: express.Response) {
   const authHeader = request.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const tokenValue = (authHeader && authHeader.split(" ")[1])?.toString();
 
   try {
-    if (token && token != "undefined") {
-      const verified = jwt.verify(token.toString(), jwtSecretKey);
-      if (verified) {
-        uploader(request, response, (error) => {
-          console.log(request.file);
-          if (request && request.file) {
-            const fileToSave: Express.Multer.File = request.file;
-            const filetypeOk: boolean = checkFileType(fileToSave);
-            if (filetypeOk) {
-              const pathArray: String[] = request.file.filename.split("/");
-              const fileAsThumbnail: String = pathArray[pathArray.length - 1];
+    if (tokenValue && tokenValue != "undefined") {
+      if (await verifyGoogleToken(tokenValue)) {
+        if (await verifyGoogleEmail(tokenValue, request.body.emailValue)) {
+          uploader(request, response, (error) => {
+            console.log(request.file);
+            if (request && request.file) {
+              const fileToSave: Express.Multer.File = request.file;
+              const filetypeOk: boolean = checkFileType(fileToSave);
+              if (filetypeOk) {
+                const pathArray: String[] = request.file.filename.split("/");
+                const fileAsThumbnail: String = pathArray[pathArray.length - 1];
 
-              const post = new Post({
-                title: request.body.titleValue,
-                description: request.body.descriptionValue,
-                photoPath: fileAsThumbnail,
-              });
-              console.log("before saving");
-              try {
-                const newPost = post.save();
-                response.status(201).redirect("/blog");
-              } catch (error) {
-                response.status(500).json({ message: "error in creating post: " + error });
+                const post = new Post({
+                  title: request.body.titleValue,
+                  description: request.body.descriptionValue,
+                  photoPath: fileAsThumbnail,
+                });
+                console.log("before saving");
+                try {
+                  const newPost = post.save();
+                  response.status(201).redirect("/blog");
+                } catch (error) {
+                  response.status(500).json({ message: "error in creating post: " + error });
+                }
+              } else {
+                return response.status(415).json({ message: "File type not supported" });
               }
             } else {
-              return response.status(415).json({ message: "File type not supported" });
+              return response.status(406).json({ message: "File not present" });
             }
-          } else {
-            return response.status(406).json({ message: "File not present" });
-          }
-        });
+          });
+        } else {
+          return response.status(401).json({ message: "Token does not match email" });
+        }
       } else {
         // Access Denied
         return response.status(401).json({ message: "JWT token invalid" });
@@ -66,7 +69,7 @@ router.post("/createPostAction", function (request: express.Request, response: e
     }
   } catch (error) {
     // Access Denied
-    console.log("error in validation of token " + token + "\n" + error + "\n");
+    console.log("error in validation of token " + tokenValue + "\n" + error + "\n");
     return response.status(500).json({ message: "error in validation" + error });
   }
 });

@@ -16,32 +16,14 @@ export default function Home() {
           </div>
           <div className="p-3 bg-black text-white">
             <p>
-              Hello, thank you for coming to my website, My name is Jeffrey
-              Fulmer Gardner. I am a San Francisco Native with a passion for
-              software development. I have been developing my software
-              development skills for years by first Attending CCSF where I got
-              my associates degree in computer Science. I am currently attending
-              SFSU in pursuit of a Bachelors in computer science. I wanted to
-              create this site so that I could fill that section on job
-              applications and have a page of my own to show off my computer
-              programing skills. This site is built on express and Nodejs is
-              hosted by me. From hardware configuration to final website, I have
-              created this with my own skills. I will continue to add features
-              and improve the look of my website over time.
+              Hello thank you for coming to my website. My name is JeffreyFG, I am the owner of Mosaic Web Design, a new company for which I have just started. I design and develop websites
+              for small business and clients. This website serves as a expanded portfolio for my skills as a full stack developer, and as a gallery
+              for potential clients to see my previous works. If you have any questions are would like to set up a meeting to discuss a potential
+              website please contact me at JeffreyFG@Outlook.com
             </p>
           </div>
         </Col>
       </Row>
     </BodyComponent>
-
-	
   );
-/*  Hello thank you for comming to my website. My name is
-                  JeffreyFG, I am the owner of Tessellatum Propositum. I design
-                  and develop websites for small bisuness and clients. This
-                  website serves as a expanded portfoilio for my skills as a
-                  full stack developer, and as a gallery for potential clients
-                  to see my previous works. If you have any questions are would
-                  like to set up a meeting to discuss a potenial website please
-                  contact me at JeffreyFG@Outlook.com .*/
 }
