@@ -38,7 +38,7 @@ function App() {
           <Route path="/createPostPage" element={user ? <CreatePostPage {...user} /> : <Navigate replace to="/login" />} />
           <Route path="/Projects" element={<ProjectsPage />} />
           <Route path="/Blog" element={<BlogPage />} />
-          <Route path="/login" element={<LoginPage /> } />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
         </Routes>
       </Router>
