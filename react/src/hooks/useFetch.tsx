@@ -1,8 +1,18 @@
 import { CredentialResponse } from "@react-oauth/google";
 import { useState } from "react";
+import { useLocalStorage } from "./useLocalStorage";
+import userInterface from "../interfaces/userInterface";
 const useFetch = (url: string | URL | Request) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const initialValue: userInterface = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    picture: "",
+    token: "",
+  };
+  const [setUser] = useLocalStorage<userInterface>("user", initialValue);
   const handleGoogle = async (credentialResponse: CredentialResponse) => {
     console.log("handle google called");
     setLoading(true);
@@ -20,15 +30,16 @@ const useFetch = (url: string | URL | Request) => {
         return res.json();
       })
       .then((data) => {
-        console.log("this is the userdata retured from the server" + data);
+        console.log("this is the user data returned from the server" + data);
         if (data?.user) {
-          localStorage.setItem("user", JSON.stringify(data?.user));
-          window.location.reload();
+          let user: userInterface = data?.user;
+          setUser(user);
         }
 
         throw new Error(data?.message || data);
       })
       .catch((error) => {
+        setUser(initialValue);
         setError(error?.message);
       });
   };

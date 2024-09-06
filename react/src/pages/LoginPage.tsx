@@ -2,13 +2,17 @@
 import useFetch from "../hooks/useFetch";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import BodyComponent from "../components/BodyComponent";
+import { useNavigate } from "react-router-dom";
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 export default function LoginPage() {
-  const { handleGoogle, loading, error } = useFetch(
-    "https://JeffreyFG.net/api/auth/login"
-  );
-
+  const { handleGoogle, loading, error } = useFetch("https://JeffreyFG.net/api/auth/login");
+  const navigate = useNavigate();
+  const handleClick = ()=>
+  {
+    
+    navigate("/CreatePostPage");
+  }
   return (
     <BodyComponent>
       <main
@@ -19,7 +23,7 @@ export default function LoginPage() {
           alignItems: "center",
         }}
       >
-        <p>My website used Google's open auth standard in conjunction with my own autherzation process</p>
+        <p>My website used Google's open auth standard in conjunction with my own authorization process</p>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {loading ? (
           <div>Loading....</div>
@@ -27,15 +31,23 @@ export default function LoginPage() {
           <GoogleLogin
             onSuccess={(credentialResponse: CredentialResponse) => {
               handleGoogle(credentialResponse);
+              navigate("/CreatePostPage");
             }}
             onError={() => {
               console.log("Login Failed:  ", error);
+              {
+                error && <p style={{ color: "red" }}>{error}</p>;
+              }
             }}
             useOneTap
           />
         )}
       </main>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      
+      <button onClick={handleClick}>
+        
+      </button>
+
       {loading ? <div>Loading....</div> : <div id="loginDiv"></div>}
     </BodyComponent>
   );

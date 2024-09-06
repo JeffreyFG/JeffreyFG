@@ -3,15 +3,15 @@ import useFetch from "../hooks/useFetch";
 import BodyComponent from "../components/BodyComponent";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import useSignUp from "../hooks/useSignUp";
+import { useNavigate } from "react-router-dom";
 
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 const SignUpPage = function () {
-  const { error, loading, handleGoogle } = useFetch(
-    "https://JeffreyFG.net/api/auth/login"
-  );
+  const { error, loading, handleGoogle } = useFetch("https://JeffreyFG.net/api/auth/login");
   const { isSignUpPermitted, getPermissionToSignUp } = useSignUp();
   getPermissionToSignUp();
+  const navigate = useNavigate();
   return (
     <BodyComponent>
       <main
@@ -22,7 +22,6 @@ const SignUpPage = function () {
           alignItems: "center",
         }}
       >
-        {error && <p style={{ color: "red" }}>{error}</p>}
         {loading ? (
           <div>Loading....</div>
         ) : (
@@ -33,9 +32,13 @@ const SignUpPage = function () {
                 <GoogleLogin
                   onSuccess={(credentialResponse: CredentialResponse) => {
                     handleGoogle(credentialResponse);
+                    navigate("/CreatePostPage");
                   }}
                   onError={() => {
                     console.log("Login Failed:  ", error);
+                    {
+                      error && <p style={{ color: "red" }}>{error}</p>;
+                    }
                   }}
                   useOneTap
                 />
