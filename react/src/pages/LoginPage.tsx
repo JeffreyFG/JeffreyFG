@@ -8,26 +8,21 @@ import { useNavigate } from "react-router-dom";
 export default function LoginPage() {
   const { handleGoogle, loading, error } = useFetch("https://JeffreyFG.net/api/auth/login");
   const navigate = useNavigate();
-  const handleClick = ()=>
-  {
-    
-    navigate("/CreatePostPage");
-  }
   return (
     <BodyComponent>
-      <main
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <p>My website used Google's open auth standard in conjunction with my own authorization process</p>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {loading ? (
-          <div>Loading....</div>
-        ) : (
+      <p className="text-center">My website used Google's open auth standard in conjunction with my own authorization process</p>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {loading ? (
+        <div>Loading....</div>
+      ) : (
+        <main
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <GoogleLogin
             onSuccess={(credentialResponse: CredentialResponse) => {
               handleGoogle(credentialResponse);
@@ -41,13 +36,8 @@ export default function LoginPage() {
             }}
             useOneTap
           />
-        )}
-      </main>
-      
-      <button onClick={handleClick}>
-        
-      </button>
-
+        </main>
+      )}
       {loading ? <div>Loading....</div> : <div id="loginDiv"></div>}
     </BodyComponent>
   );
