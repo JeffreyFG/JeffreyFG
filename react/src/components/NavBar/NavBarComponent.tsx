@@ -9,7 +9,6 @@ import "bootstrap/js/src/collapse.js";
 const logout = () => {
   googleLogout();
   localStorage.removeItem("user");
-  console.log("logged out");
   window.location.reload();
 };
 
@@ -61,7 +60,11 @@ export default function NavBarComponent() {
     if (window.user) {
       return (
         <Nav.Link href="#">
-          <Button variant="outline-danger" style={{ margin: "2px" }} onClick={logout}>
+          <Button
+            variant="outline-danger"
+            style={{ margin: "2px" }}
+            onClick={logout}
+          >
             Logout
           </Button>
         </Nav.Link>
