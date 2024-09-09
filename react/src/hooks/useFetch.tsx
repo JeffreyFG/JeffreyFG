@@ -16,14 +16,11 @@ const useFetch = (url: string | URL | Request) => {
   const [_user, setUser] = useLocalStorage<userInterface>("user", initialValue);
 
   type JSONResponse = {
-    data?: {
-      user: userInterface;
-    };
-    errors?: Array<{ message: string }>;
+    message: string;
+    user: userInterface;
   };
 
   const handleGoogle = async (credentialResponse: CredentialResponse) => {
-    console.log("handle google called");
     setLoading(true);
     const response = await fetch(url, {
       method: "POST",
@@ -33,21 +30,22 @@ const useFetch = (url: string | URL | Request) => {
 
       body: JSON.stringify({ credential: credentialResponse.credential }),
     });
-    const { data, errors }: JSONResponse = await response.json();
+    //const { data, errors }: JSONResponse = await response.json();
+    const { message, user }: JSONResponse = await response.json();
     if (response.ok) {
       setLoading(false);
-      const userResponse: userInterface = data?.user!;
+      const userResponse: userInterface = user;
       if (userResponse) {
         setUser(userResponse);
+        setLoading(false);
+        return;
       } else {
-        return Promise.reject(new Error(`No user response}"`));
+        setError("No user in response");
+        const error = new Error("No user in response");
+        return Promise.reject(error);
       }
-      setError("No user in response");
-      throw new Error("No user in response");
     } else {
-      // handle the graphql errors
-
-      const error = new Error(errors?.map((e) => e.message).join("\n") ?? "unknown");
+      const error = new Error(message);
       return Promise.reject(error);
     }
   };
