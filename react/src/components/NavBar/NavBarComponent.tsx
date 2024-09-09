@@ -23,17 +23,33 @@ export default function NavBarComponent() {
   ];
 
   return (
-    <Navbar fixed="top" expand="lg" className="bg-body-tertiary">
-      <Container>
+    <Navbar collapseOnSelect expand="lg" className="bg-light" sticky="top">
+      <Container fluid>
         <Navbar.Brand href="/">Jeffrey FG</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mg-auto">
+          <Nav className="me-auto">
             {NavBarLinksItemListProperty.map((NavBarItem) => (
-              <Nav.Link key={NavBarItem.id} href={NavBarItem.route}>
-                {NavBarItem.routeName}
-              </Nav.Link>
+              <>
+                {NavBarItem.routeName === "Create" ? (
+                  <>
+                    {window.user ? (
+                      <Nav.Link key={NavBarItem.id} href={NavBarItem.route}>
+                        {NavBarItem.routeName}
+                      </Nav.Link>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                ) : (
+                  <Nav.Link key={NavBarItem.id} href={NavBarItem.route}>
+                    {NavBarItem.routeName}
+                  </Nav.Link>
+                )}
+              </>
             ))}
+          </Nav>
+          <Nav className="justify-content-right">
             <UserButton></UserButton>
           </Nav>
         </Navbar.Collapse>
@@ -45,11 +61,7 @@ export default function NavBarComponent() {
     if (window.user) {
       return (
         <Nav.Link href="#">
-          <Button
-            variant="outline-danger"
-            style={{ margin: "2px" }}
-            onClick={logout}
-          >
+          <Button variant="outline-danger" style={{ margin: "2px" }} onClick={logout}>
             Logout
           </Button>
         </Nav.Link>
@@ -64,8 +76,6 @@ export default function NavBarComponent() {
             {/* </Button>
             </a> */}
           </Nav.Link>
-          <Nav.Link disabled>/</Nav.Link>
-
           <Nav.Link href="/signUp">
             {/* <a href="/login">
               <Button variant="primary" style={{ margin: "2px" }}> */}

@@ -3,8 +3,6 @@ import { useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import userInterface from "../interfaces/userInterface";
 const useFetch = (url: string | URL | Request) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
   const initialValue: userInterface = {
     firstName: "",
     lastName: "",
@@ -12,36 +10,46 @@ const useFetch = (url: string | URL | Request) => {
     picture: "",
     token: "",
   };
-  const [setUser] = useLocalStorage<userInterface>("user", initialValue);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
+  const [_user, setUser] = useLocalStorage<userInterface>("user", initialValue);
+
+  type JSONResponse = {
+    data?: {
+      user: userInterface;
+    };
+    errors?: Array<{ message: string }>;
+  };
+
   const handleGoogle = async (credentialResponse: CredentialResponse) => {
     console.log("handle google called");
     setLoading(true);
-    fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
 
       body: JSON.stringify({ credential: credentialResponse.credential }),
-    })
-      .then((res) => {
-        setLoading(false);
+    });
+    const { data, errors }: JSONResponse = await response.json();
+    if (response.ok) {
+      setLoading(false);
+      const userResponse: userInterface = data?.user!;
+      if (userResponse) {
+        setUser(userResponse);
+      } else {
+        return Promise.reject(new Error(`No user response}"`));
+      }
+      setError("No user in response");
+      throw new Error("No user in response");
+    } else {
+      // handle the graphql errors
 
-        return res.json();
-      })
-      .then((data) => {
-        console.log("this is the user data returned from the server" + data);
-        if (data?.user) {
-          let user: userInterface = data?.user;
-          setUser(user);
-        }
-
-        throw new Error(data?.message || data);
-      })
-      .catch((error) => {
-        setUser(initialValue);
-        setError(error?.message);
-      });
+      const error = new Error(errors?.map((e) => e.message).join("\n") ?? "unknown");
+      return Promise.reject(error);
+    }
   };
 
   return { loading, error, handleGoogle };
