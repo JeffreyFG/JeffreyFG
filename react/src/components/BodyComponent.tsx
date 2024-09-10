@@ -1,13 +1,22 @@
 import Container from "react-bootstrap/esm/Container";
 import Header from "../components/myHeader";
 import NavBarComponent from "./NavBar/NavBarComponent";
-export default function BodyComponent({ children }: { children: any }) {
+import { Dispatch, SetStateAction } from "react";
+import userInterface from "../interfaces/userInterface";
+export default function BodyComponent(properties: {
+  isloggedIn: boolean;
+  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
+  children: any;
+}) {
   return (
     <>
       <Header children={undefined}></Header>
       <div className="mainBackGround ">
-        <NavBarComponent />
-        <Container className="mainContainer">{children}</Container>
+        <NavBarComponent
+          isLoggedIn={properties.isloggedIn}
+          setStateUser={properties.setStateUser}
+        />
+        <Container className="mainContainer">{properties.children}</Container>
       </div>
     </>
   );

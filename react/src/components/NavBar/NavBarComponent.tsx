@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { Dispatch, ReactElement, SetStateAction } from "react";
 import { routeType } from "./types/routeType.ts";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -6,21 +6,23 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/esm/Button";
 import { googleLogout } from "@react-oauth/google";
 import "bootstrap/js/src/collapse.js";
-const logout = () => {
-  googleLogout();
-  localStorage.removeItem("user");
-  window.location.reload();
-};
+import userInterface from "../../interfaces/userInterface.ts";
 
-export default function NavBarComponent() {
-  const [] = useState([]);
+export default function NavBarComponent(properties: {
+  isLoggedIn: boolean;
+  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
+}) {
   const NavBarLinksItemListProperty: routeType[] = [
     { id: 0, route: "/", routeName: "Home" },
     { id: 1, route: "/Projects", routeName: "Projects" },
     { id: 2, route: "/blog", routeName: "Blog" },
     { id: 4, route: "/createPostPage", routeName: "Create" },
   ];
-
+  const logout = () => {
+    googleLogout();
+    properties.setStateUser(undefined);
+    localStorage.removeItem("user");
+  };
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-light" sticky="top">
       <Container fluid>
@@ -29,10 +31,10 @@ export default function NavBarComponent() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {NavBarLinksItemListProperty.map((NavBarItem) => (
-              <>
+              <div key={NavBarItem.id}>
                 {NavBarItem.routeName === "Create" ? (
                   <>
-                    {window.user ? (
+                    {properties.isLoggedIn ? (
                       <Nav.Link key={NavBarItem.id} href={NavBarItem.route}>
                         {NavBarItem.routeName}
                       </Nav.Link>
@@ -45,7 +47,7 @@ export default function NavBarComponent() {
                     {NavBarItem.routeName}
                   </Nav.Link>
                 )}
-              </>
+              </div>
             ))}
           </Nav>
           <Nav className="justify-content-right">
@@ -57,7 +59,7 @@ export default function NavBarComponent() {
   );
 
   function UserButton(): ReactElement {
-    if (window.user) {
+    if (properties.isLoggedIn) {
       return (
         <Nav.Link href="#">
           <Button

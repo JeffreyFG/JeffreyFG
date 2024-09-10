@@ -1,19 +1,12 @@
 import { CredentialResponse } from "@react-oauth/google";
-import { useState } from "react";
-import { useLocalStorage } from "./useLocalStorage";
+import { Dispatch, SetStateAction, useState } from "react";
 import userInterface from "../interfaces/userInterface";
-const useFetch = (url: string | URL | Request) => {
-  const initialValue: userInterface = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    picture: "",
-    token: "",
-  };
+const useFetch = (
+  url: string | URL | Request,
+  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>
+) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-
-  const [_user, setUser] = useLocalStorage<userInterface>("user", initialValue);
 
   type JSONResponse = {
     message: string;
@@ -36,9 +29,8 @@ const useFetch = (url: string | URL | Request) => {
       setLoading(false);
       const userResponse: userInterface = user;
       if (userResponse) {
-        setUser(userResponse);
+        setStateUser(userResponse);
         setLoading(false);
-        return;
       } else {
         setError("No user in response");
         const error = new Error("No user in response");

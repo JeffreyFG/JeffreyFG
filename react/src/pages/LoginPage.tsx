@@ -2,15 +2,31 @@
 import useFetch from "../hooks/useFetch";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import BodyComponent from "../components/BodyComponent";
-import { useNavigate } from "react-router-dom";
+
+import { Dispatch, SetStateAction } from "react";
+import userInterface from "../interfaces/userInterface";
+
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
-export default function LoginPage() {
-  const { handleGoogle, loading, error } = useFetch("https://JeffreyFG.net/api/auth/login");
-  const navigate = useNavigate();
+export default function LoginPage(properties: {
+  isLoggedIn: boolean;
+  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
+  callNavigate: (route: string) => void;
+}) {
+  const { handleGoogle, loading, error } = useFetch(
+    "https://JeffreyFG.net/api/auth/login",
+    properties.setStateUser
+  );
+
   return (
-    <BodyComponent>
-      <p className="text-center">My website used Google's open auth standard in conjunction with my own authorization process</p>
+    <BodyComponent
+      isloggedIn={properties.isLoggedIn}
+      setStateUser={properties.setStateUser}
+    >
+      <p className="text-center">
+        My website used Google's open auth standard in conjunction with my own
+        authorization process
+      </p>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {loading ? (
         <div>Loading....</div>
@@ -26,7 +42,8 @@ export default function LoginPage() {
           <GoogleLogin
             onSuccess={(credentialResponse: CredentialResponse) => {
               handleGoogle(credentialResponse);
-              navigate("/CreatePostPage");
+              console.log("navigate about to be called");
+              properties.callNavigate("/createPostPage");
             }}
             onError={() => {
               console.log("Login Failed:  ", error);
@@ -34,7 +51,6 @@ export default function LoginPage() {
                 error && <p style={{ color: "red" }}>{error}</p>;
               }
             }}
-            useOneTap
           />
         </main>
       )}
