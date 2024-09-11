@@ -5,59 +5,104 @@ import BlogPage from "./pages/BlogPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+
+import { Routes, Route, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import { useLocalStorage } from "./hooks/useLocalStorage";
 import userInterface from "./interfaces/userInterface";
+import { useState } from "react";
+
+import React from "react";
 declare global {
   interface Window {
     google: any;
-    user: boolean;
   }
 }
+const initialValue: userInterface = {
+  email: "",
+  firstName: "",
+  lastName: "",
+  picture: "",
+  token: "",
+};
+const App = () => {
+  const [stateUser, setStateUser] = useState<userInterface>(initialValue);
+  React.useEffect(() => {
+    const theUser = localStorage.getItem("user");
 
-function App() {
-  const initialValue: userInterface = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    picture: "",
-    token: "",
-  };
-  const [user] = useLocalStorage<userInterface>("user", initialValue);
-  if (user) {
-    window.user = true;
-  } else {
-    window.user = false;
-  }
+    if (theUser && !theUser.includes("undefined")) {
+      setStateUser(JSON.parse(theUser));
+    }
+  }, []);
+
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route
-            path="/createPostPage"
-            element={
-              user ? (
-                <CreatePostPage {...user} />
-              ) : (
-                <Navigate replace to="/login" />
-              )
-            }
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <HomePage
+            isLoggedIn={stateUser.email != ""}
+            setStateUser={setStateUser}
           />
-          <Route path="/Projects" element={<ProjectsPage />} />
-          <Route path="/Blog" element={<BlogPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signUp" element={<SignUpPage />} />
-        </Routes>
-      </Router>
-    </>
+        }
+      />
+
+      <Route
+        path="/Projects"
+        element={
+          <ProjectsPage
+            isLoggedIn={stateUser.email != ""}
+            setStateUser={setStateUser}
+          />
+        }
+      />
+      <Route
+        path="/Blog"
+        element={
+          <BlogPage
+            isLoggedIn={stateUser.email != ""}
+            setStateUser={setStateUser}
+          />
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          stateUser?.email ? (
+            <Navigate to="/" />
+          ) : (
+            <LoginPage
+              isLoggedIn={stateUser.email != ""}
+              setStateUser={setStateUser}
+            />
+          )
+        }
+      />
+      <Route
+        path="/signUp"
+        element={
+          stateUser?.email ? (
+            <Navigate to="/" />
+          ) : (
+            <SignUpPage
+              isLoggedIn={stateUser.email != ""}
+              setStateUser={setStateUser}
+            />
+          )
+        }
+      />
+
+      <Route
+        path="/createPostPage"
+        element={
+          <CreatePostPage
+            isLoggedIn={stateUser.email != ""}
+            user={stateUser}
+            setStateUser={setStateUser}
+          />
+        }
+      />
+    </Routes>
   );
-}
+};
 export default App;

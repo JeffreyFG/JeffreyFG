@@ -1,7 +1,8 @@
 import Form from "react-bootstrap/esm/Form";
 //import { useLocalStorage } from "../hooks/useLocalStorage";
 import Button from "react-bootstrap/esm/Button";
-import userType from "../../types/userType";
+//import userType from "../../types/userType";
+import userInterface from "../../interfaces/userInterface";
 import axios from "axios";
 import { useState } from "react";
 //import { FormEvent } from "react";
@@ -16,7 +17,7 @@ interface PostFormElement extends HTMLFormElement {
   readonly files: FileList;
 }
 
-export default function CreatePostForm(user: userType) {
+export default function CreatePostForm(props: { user: userInterface }) {
   const [currentImage, setCurrentImage] = useState<FileList>();
   const [formsubmited, setFormsubmited] = useState<Boolean>(false);
 
@@ -34,7 +35,7 @@ export default function CreatePostForm(user: userType) {
       "titleValue",
       event.currentTarget.elements.titleValue.value
     );
-    formData.append("emailValue", user.email);
+    formData.append("emailValue", props.user.email);
     formData.append(
       "descriptionValue",
       event.currentTarget.elements.descriptionValue.value
@@ -42,7 +43,7 @@ export default function CreatePostForm(user: userType) {
     formData.append("file", currentImage![0]);
     const config = {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${props.user.token}`,
         "content-type": "multipart/form-data",
       },
     };

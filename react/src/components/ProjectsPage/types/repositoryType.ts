@@ -1,8 +1,6 @@
-export  type repositoryType = 
-{
-  
-  urlForRepo:string;
-  nameOfRepo:string;
-  repoLanguage:string;
-}
+export type repositoryType = {
+  html_url: string;
+  name: string;
+  language: string;
+};
 export default repositoryType;
