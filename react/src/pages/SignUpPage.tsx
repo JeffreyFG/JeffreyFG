@@ -45,12 +45,14 @@ const SignUpPage = (properties: { isLoggedIn: boolean; setStateUser: Dispatch<Se
               </>
             ) : (
               <>
-                <p>Sign ups are not permitted anymore</p>
                 <br />
-                <p>The sign up functionality is no longer permitted as it was created to show that I understand how to create a complete auth flow</p>
+                <p>
+                  The sign up functionality is no longer permitted. Originally created to show that I understand how to create a complete auth flow
+                </p>
                 <br></br>
-                <p> In an effort to demonstrate this further I have created a full diagram for this web application</p>
-                <Image fluid src="/images/JeffreyFGServerStructure.drawio.svg" rounded />
+                <p>The system was no longer necessary so was deactivated. Documentation for the google auth flow can be seen at </p>{" "}
+                <a href="/ServerDesign">the server design page</a>
+                <br></br>
               </>
             )}
           </>

@@ -13,6 +13,8 @@ import userInterface from "./interfaces/userInterface";
 import { useState } from "react";
 
 import React from "react";
+import ServerDesignPage from "./pages/ServerDesignPage";
+import FullStackPage from "./pages/FullStackPage";
 declare global {
   interface Window {
     google: any;
@@ -37,71 +39,22 @@ const App = () => {
 
   return (
     <Routes>
+      <Route path="/" element={<HomePage isLoggedIn={stateUser.email != ""} setStateUser={setStateUser} />} />
+
+      <Route path="/Projects" element={<ProjectsPage isLoggedIn={stateUser.email != ""} setStateUser={setStateUser} />} />
+      <Route path="/Blog" element={<BlogPage isLoggedIn={stateUser.email != ""} setStateUser={setStateUser} />} />
+      <Route path="/ServerDesign" element={<ServerDesignPage isLoggedIn={stateUser.email != ""} setStateUser={setStateUser} />} />
+      <Route path="/FullStack" element={<FullStackPage isLoggedIn={stateUser.email != ""} setStateUser={setStateUser} />} />
       <Route
-        path="/"
-        element={
-          <HomePage
-            isLoggedIn={stateUser.email != ""}
-            setStateUser={setStateUser}
-          />
-        }
+        path="/Login"
+        element={stateUser?.email ? <Navigate to="/" /> : <LoginPage isLoggedIn={stateUser.email != ""} setStateUser={setStateUser} />}
+      />
+      <Route
+        path="/SignUp"
+        element={stateUser?.email ? <Navigate to="/" /> : <SignUpPage isLoggedIn={stateUser.email != ""} setStateUser={setStateUser} />}
       />
 
-      <Route
-        path="/Projects"
-        element={
-          <ProjectsPage
-            isLoggedIn={stateUser.email != ""}
-            setStateUser={setStateUser}
-          />
-        }
-      />
-      <Route
-        path="/Blog"
-        element={
-          <BlogPage
-            isLoggedIn={stateUser.email != ""}
-            setStateUser={setStateUser}
-          />
-        }
-      />
-      <Route
-        path="/login"
-        element={
-          stateUser?.email ? (
-            <Navigate to="/" />
-          ) : (
-            <LoginPage
-              isLoggedIn={stateUser.email != ""}
-              setStateUser={setStateUser}
-            />
-          )
-        }
-      />
-      <Route
-        path="/signUp"
-        element={
-          stateUser?.email ? (
-            <Navigate to="/" />
-          ) : (
-            <SignUpPage
-              isLoggedIn={stateUser.email != ""}
-              setStateUser={setStateUser}
-            />
-          )
-        }
-      />
-
-      <Route
-        path="/createPostPage"
-        element={
-          <CreatePostPage
-            isLoggedIn={stateUser.email != ""}
-            user={stateUser}
-            setStateUser={setStateUser}
-          />
-        }
-      />
+      <Route path="/createPostPage" element={<CreatePostPage isLoggedIn={stateUser.email != ""} user={stateUser} setStateUser={setStateUser} />} />
     </Routes>
   );
 };

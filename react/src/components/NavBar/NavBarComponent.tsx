@@ -9,15 +9,14 @@ import "bootstrap/js/src/collapse.js";
 import userInterface from "../../interfaces/userInterface.ts";
 import { useNavigate } from "react-router-dom";
 
-export default function NavBarComponent(properties: {
-  isLoggedIn: boolean;
-  setStateUser: Dispatch<SetStateAction<userInterface>>;
-}) {
+export default function NavBarComponent(properties: { isLoggedIn: boolean; setStateUser: Dispatch<SetStateAction<userInterface>> }) {
   const NavBarLinksItemListProperty: routeType[] = [
     { id: 0, route: "/", routeName: "Home" },
     { id: 1, route: "/Projects", routeName: "Projects" },
-    { id: 2, route: "/blog", routeName: "Blog" },
-    { id: 4, route: "/createPostPage", routeName: "Create" },
+    { id: 2, route: "/Blog", routeName: "Blog" },
+    { id: 3, route: "/ServerDesign", routeName: "Server Design" },
+    { id: 4, route: "/FullStack", routeName: "Full Stack?" },
+    { id: 5, route: "/CreatePostPage", routeName: "Create" },
   ];
   const initialValue: userInterface = {
     email: "",
@@ -32,7 +31,7 @@ export default function NavBarComponent(properties: {
     properties.setStateUser(initialValue);
 
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/Login");
   };
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-light" sticky="top">
@@ -73,11 +72,7 @@ export default function NavBarComponent(properties: {
     if (properties.isLoggedIn) {
       return (
         <Nav.Link href="#">
-          <Button
-            variant="outline-danger"
-            style={{ margin: "2px" }}
-            onClick={logout}
-          >
+          <Button variant="outline-danger" style={{ margin: "2px" }} onClick={logout}>
             Logout
           </Button>
         </Nav.Link>
@@ -92,7 +87,7 @@ export default function NavBarComponent(properties: {
             {/* </Button>
             </a> */}
           </Nav.Link>
-          <Nav.Link href="/signUp">
+          <Nav.Link disabled href="/signUp">
             {/* <a href="/login">
               <Button variant="primary" style={{ margin: "2px" }}> */}
             Sign Up
