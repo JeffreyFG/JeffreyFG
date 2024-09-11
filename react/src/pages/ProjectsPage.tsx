@@ -7,9 +7,11 @@ import userInterface from "../interfaces/userInterface.ts";
 
 const MainProjectsPage = (properties: {
   isLoggedIn: boolean;
-  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
+  setStateUser: Dispatch<SetStateAction<userInterface>>;
 }) => {
-  const [repositories, setUsers] = useState<repositoryType[] | null>(null);
+  const [repositories, setRepositories] = useState<repositoryType[] | null>(
+    null
+  );
   useEffect(() => {
     const getData = async () => {
       try {
@@ -17,7 +19,8 @@ const MainProjectsPage = (properties: {
           "https://api.github.com/users/JeffreyFG/repos"
         );
         let data = await response.json();
-        setUsers(data);
+        console.log(data);
+        setRepositories(data);
       } catch (err) {
         console.log(err);
       }
@@ -43,7 +46,7 @@ const MainProjectsPage = (properties: {
             {repositories &&
               repositories.length > 0 &&
               repositories.map((repository, index) => {
-                return <RepoCard key={index} {...repository}></RepoCard>;
+                return <RepoCard key={index} repo={repository}></RepoCard>;
               })}
           </>
         </div>

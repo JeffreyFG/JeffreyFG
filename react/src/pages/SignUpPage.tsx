@@ -11,7 +11,7 @@ import userInterface from "../interfaces/userInterface";
 
 const SignUpPage = (properties: {
   isLoggedIn: boolean;
-  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
+  setStateUser: Dispatch<SetStateAction<userInterface>>;
 }) => {
   const { error, loading, handleGoogle } = useFetch(
     "https://JeffreyFG.net/api/auth/login",

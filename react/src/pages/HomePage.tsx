@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from "react";
 import userInterface from "../interfaces/userInterface.ts";
 const Home = (properties: {
   isLoggedIn: boolean;
-  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
+  setStateUser: Dispatch<SetStateAction<userInterface>>;
 }) => {
   return (
     <BodyComponent

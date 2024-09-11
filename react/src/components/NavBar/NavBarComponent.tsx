@@ -7,10 +7,11 @@ import Button from "react-bootstrap/esm/Button";
 import { googleLogout } from "@react-oauth/google";
 import "bootstrap/js/src/collapse.js";
 import userInterface from "../../interfaces/userInterface.ts";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBarComponent(properties: {
   isLoggedIn: boolean;
-  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
+  setStateUser: Dispatch<SetStateAction<userInterface>>;
 }) {
   const NavBarLinksItemListProperty: routeType[] = [
     { id: 0, route: "/", routeName: "Home" },
@@ -18,10 +19,20 @@ export default function NavBarComponent(properties: {
     { id: 2, route: "/blog", routeName: "Blog" },
     { id: 4, route: "/createPostPage", routeName: "Create" },
   ];
+  const initialValue: userInterface = {
+    email: "",
+    firstName: "",
+    lastName: "",
+    picture: "",
+    token: "",
+  };
+  const navigate = useNavigate();
   const logout = () => {
     googleLogout();
-    properties.setStateUser(undefined);
+    properties.setStateUser(initialValue);
+
     localStorage.removeItem("user");
+    navigate("/login");
   };
   return (
     <Navbar collapseOnSelect expand="lg" className="bg-light" sticky="top">

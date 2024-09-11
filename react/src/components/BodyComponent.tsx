@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 import userInterface from "../interfaces/userInterface";
 export default function BodyComponent(properties: {
   isloggedIn: boolean;
-  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
+  setStateUser: Dispatch<SetStateAction<userInterface>>;
   children: any;
 }) {
   return (

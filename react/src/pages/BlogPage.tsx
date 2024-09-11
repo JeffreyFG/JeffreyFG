@@ -5,7 +5,7 @@ import { blogPost } from "../components/BlogPage/types/BlogPost.ts";
 import userInterface from "../interfaces/userInterface.ts";
 const BlogPage = (properties: {
   isLoggedIn: boolean;
-  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
+  setStateUser: Dispatch<SetStateAction<userInterface>>;
 }) => {
   const [blogPosts, setBlogs] = useState<blogPost[] | null>(null);
   useEffect(() => {

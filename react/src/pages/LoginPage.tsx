@@ -5,27 +5,27 @@ import BodyComponent from "../components/BodyComponent";
 
 import { Dispatch, SetStateAction } from "react";
 import userInterface from "../interfaces/userInterface";
+import { useNavigate } from "react-router-dom";
 
 // https://developers.google.com/identity/gsi/web/reference/js-reference
 
 export default function LoginPage(properties: {
   isLoggedIn: boolean;
-  setStateUser: Dispatch<SetStateAction<userInterface | undefined>>;
-  callNavigate: (route: string) => void;
+  setStateUser: Dispatch<SetStateAction<userInterface>>;
 }) {
   const { handleGoogle, loading, error } = useFetch(
     "https://JeffreyFG.net/api/auth/login",
     properties.setStateUser
   );
-
+  const navigate = useNavigate();
   return (
     <BodyComponent
       isloggedIn={properties.isLoggedIn}
       setStateUser={properties.setStateUser}
     >
       <p className="text-center">
-        My website used Google's open auth standard in conjunction with my own
-        authorization process
+        My website used Google's open authentication standard in conjunction
+        with my own authorization process
       </p>
       {error && <p style={{ color: "red" }}>{error}</p>}
       {loading ? (
@@ -42,8 +42,7 @@ export default function LoginPage(properties: {
           <GoogleLogin
             onSuccess={(credentialResponse: CredentialResponse) => {
               handleGoogle(credentialResponse);
-              console.log("navigate about to be called");
-              properties.callNavigate("/createPostPage");
+              navigate("/createPostPage");
             }}
             onError={() => {
               console.log("Login Failed:  ", error);
