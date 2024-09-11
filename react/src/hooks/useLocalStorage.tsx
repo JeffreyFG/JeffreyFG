@@ -10,7 +10,10 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     try {
       const localStorageValue = localStorage.getItem(key);
 
-      initialValue = localStorageValue !== null ? parseJSON(localStorageValue) : initialValue;
+      initialValue =
+        localStorageValue !== null
+          ? parseJSON(localStorageValue)
+          : initialValue;
 
       setValue(initialValue);
     } catch (error) {
@@ -21,7 +24,8 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
   React.useEffect(() => {
     const onStorage = (e: StorageEvent) => {
       if (e.key === key) {
-        const newValue = e.newValue !== null ? parseJSON(e.newValue) : undefined;
+        const newValue =
+          e.newValue !== null ? parseJSON(e.newValue) : undefined;
         setValue(newValue);
       }
     };

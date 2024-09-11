@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import BlogCard from "../components/BlogPage/BlogCard.tsx";
 import BodyComponent from "../components/BodyComponent.tsx";
 import { blogPost } from "../components/BlogPage/types/BlogPost.ts";
-export default function BlogPage() {
+import userInterface from "../interfaces/userInterface.ts";
+const BlogPage = (properties: {
+  isLoggedIn: boolean;
+  setStateUser: Dispatch<SetStateAction<userInterface>>;
+}) => {
   const [blogPosts, setBlogs] = useState<blogPost[] | null>(null);
   useEffect(() => {
     const getData = async () => {
@@ -18,7 +22,10 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <BodyComponent>
+    <BodyComponent
+      isloggedIn={properties.isLoggedIn}
+      setStateUser={properties.setStateUser}
+    >
       <section>
         <div className="row py-lg-5">
           <div className="col-lg-6 col-md-8 mx-auto">
@@ -44,5 +51,6 @@ export default function BlogPage() {
       </div>
     </BodyComponent>
   );
-}
+};
+export default BlogPage;
 /**/
