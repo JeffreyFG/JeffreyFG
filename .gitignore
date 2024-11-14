@@ -7,7 +7,9 @@ node_modules
 .sass-cache
 ./public/.wellknown
 ./public/.wellknown/*
-
+dist
+dist/*
+./dist/
 
 ssl/
 
