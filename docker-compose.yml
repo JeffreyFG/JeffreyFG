@@ -1,9 +1,9 @@
 services:
   express-backend-development:
+    restart: always
     container_name: "express-backend-development"
     profiles:
       - development
-
     build: .
     command: npm run devStart
     volumes:
@@ -27,6 +27,7 @@ services:
         condition: service_started
   ############################
   express-backend-production:
+    restart: always
     container_name: "express-backend-production"
     profiles:
       - production
@@ -38,6 +39,7 @@ services:
     ports:
       - 127.0.0.1:3000:3000
   nginx-reverse-proxy-production:
+    restart: always
     container_name: "nginx-reverse-proxy-production"
     profiles:
       - production
@@ -54,6 +56,7 @@ services:
       - "./dist:/usr/share/nginx/html"
       - "./public:/usr/share/nginx/html/public"
   mongodb:
+    restart: always
     image: mongo:6-jammy
     container_name: "mongoDB"
     profiles:
@@ -64,5 +67,18 @@ services:
     volumes:
       - ./mongodb:/data/db
       - ./gzDump.gz:/data/gzDump.gz
+  cloudflare-ddns:
+    image: oznu/cloudflare-ddns:latest
+    restart: always
+    environment:
+      - API_KEY_FILE=/run/secrets/Cloud_Flare_Key
+      - ZONE=JeffreyFG.net
+      - PROXIED=false
+    secrets:
+      - Cloud_Flare_Key
+secrets:
+  Cloud_Flare_Key:
+    file: ssl/Cloud_Flare.Key
+
 volumes:
   dbdata6:
